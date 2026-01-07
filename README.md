@@ -107,7 +107,7 @@ The system is designed using a layered, cloud-native architecture on Microsoft A
 #### Frontend (Presentation Layer)
 
 - **Azure Static Web Apps**
-- **Framework:** React / Vue / Svelte (to be decided)
+- **Framework:** React
 - **Authentication:** Integrated using Azure AD B2C
 
 #### Backend (API Layer)
