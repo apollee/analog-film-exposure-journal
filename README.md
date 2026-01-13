@@ -120,3 +120,9 @@ The system is designed using a layered, cloud-native architecture on Microsoft A
 - **Azure Cosmos DB** (NoSQL)
 - **Stores:** Film rolls, frames, and review data
 
+## Live Demo
+
+The frontend is deployed using **Azure Static Web Apps** with GitHub-based CI/CD. Every push to `main` triggers an automatic build and deployment.
+
+🔗 Live URL: https://calm-sea-0d75bbc03.4.azurestaticapps.net
+
