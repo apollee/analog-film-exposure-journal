@@ -16,6 +16,7 @@ export default function RollDetails() {
     iso: 400,
     notes: "",
     status: "DEVELOPED",
+    rollType: "COLOR",
   };
 
   return (
@@ -27,7 +28,7 @@ export default function RollDetails() {
         ) : (
           <FrameGrid />
         )}
-      </section>
+        </section>
     </div>
   );
 }

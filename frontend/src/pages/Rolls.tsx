@@ -1,6 +1,7 @@
-import Roll from "../components/JournalRoll";
+import type { Roll } from "../types/roll";
+import JournalRoll from "../components/JournalRoll";
 
-const mockRolls = [
+const mockRolls: Roll[] = [
   {
     id: "1",
     name: "Lisbon Street Walk",
@@ -8,6 +9,7 @@ const mockRolls = [
     iso: 400,
     notes: "",
     status: "IN_PROGRESS",
+    rollType: "COLOR"
   },
   {
     id: "2",
@@ -15,7 +17,8 @@ const mockRolls = [
     filmStock: "Kodak Gold 200",
     iso: 200,
     notes: "",
-    status: "IN_PROGRESS",
+    status: "DEVELOPED",
+    rollType: "COLOR"
   },
 ];
 
@@ -24,13 +27,9 @@ export default function Rolls() {
     <div>
       <h1>Film Rolls List</h1>
         {mockRolls.map((roll) => (
-          <Roll
+          <JournalRoll
             key={roll.id}
-            id={roll.id}
-            name={roll.name}
-            filmStock={roll.filmStock}
-            iso={roll.iso}
-            notes=""
+            roll={roll}
           />
         ))}
     </div>

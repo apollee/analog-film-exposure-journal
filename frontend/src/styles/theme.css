@@ -1,0 +1,26 @@
+:root {
+  /* Backgrounds */
+  --bg-page: #fafafa;
+  --bg-card: #ffffff;
+
+  /* Text */
+  --text-primary: #222222;
+  --text-secondary: #555555;
+  --text-muted: #777777;
+
+  /* Borders */
+  --border-subtle: #e5e5e5;
+
+  /* Accent */
+  --accent: #ffbe0b; 
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}

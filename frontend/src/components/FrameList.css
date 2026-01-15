@@ -1,0 +1,10 @@
+.frame-list {
+  list-style: none;
+  padding: 0;
+}
+
+.frame-list li {
+  padding: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}

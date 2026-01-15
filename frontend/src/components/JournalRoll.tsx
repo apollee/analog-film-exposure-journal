@@ -1,23 +1,20 @@
 import { Link } from "react-router-dom";
 import type { Roll } from "../types/roll";
+import "./JournalRoll.css";
 
 export default function JournalRoll({
-  id,
-  name,
-  filmStock,
-  iso,
-  notes,
-  status,
-}: Roll) {
+  roll
+}: { roll: Roll }) {
   return (
-    <Link to={`/journal-rolls/${id}`}>
+    <Link to={`/journal-rolls/${roll.id}`} className="roll-card">
         <div>
-        <h2>{name}</h2>
+        <h2>{roll.name}</h2>
         <p>
-            {filmStock} – ISO {iso}
+            {roll.filmStock} – ISO {roll.iso}
         </p>
-        <p>{notes}</p>
-        <p>{status}</p>
+        <p>{roll.notes}</p>
+        <p>{roll.status}</p>
+        <p>{roll.rollType}</p>
         </div>
     </Link>
   );
