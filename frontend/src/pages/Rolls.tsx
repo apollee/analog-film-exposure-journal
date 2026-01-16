@@ -9,7 +9,7 @@ const mockRolls: Roll[] = [
     iso: 400,
     notes: "",
     status: "IN_PROGRESS",
-    rollType: "COLOR"
+    rollColor: "COLOR"
   },
   {
     id: "2",
@@ -18,7 +18,7 @@ const mockRolls: Roll[] = [
     iso: 200,
     notes: "",
     status: "DEVELOPED",
-    rollType: "COLOR"
+    rollColor: "COLOR"
   },
 ];
 

@@ -16,19 +16,13 @@ export default function RollDetails() {
     iso: 400,
     notes: "",
     status: "DEVELOPED",
-    rollType: "COLOR",
+    rollColor: "COLOR",
   };
 
   return (
     <div>
         <RollHeader roll={mockRoll} />
-        <section>
-        {mockRoll.status === "IN_PROGRESS" ? (
-          <FrameList />
-        ) : (
-          <FrameGrid />
-        )}
-        </section>
+        {mockRoll.status === "IN_PROGRESS" ? <FrameList /> : <FrameGrid />}
     </div>
   );
 }

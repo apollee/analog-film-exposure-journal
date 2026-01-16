@@ -1,0 +1,26 @@
+/* ---------------- Status Badge ---------------- */
+
+.status-badge {
+display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.status-badge.in_progress {
+  background: #fff4cc;
+  color: #8a6d00;
+}
+
+.status-badge.developed {
+  background: #e6f4ea;
+  color: #1e7f3b;
+}
+
+/* ---------------- Roll Meta ---------------- */
+
+.roll-color-icon {
+  font-size: 18px;
+}

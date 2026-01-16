@@ -1,4 +1,4 @@
-type RollType = "COLOR" | "BLACK_AND_WHITE";
+type RollColor = "COLOR" | "BLACK_AND_WHITE";
 type RollStatus = "IN_PROGRESS" | "DEVELOPED";
 
 export type Roll = {
@@ -8,5 +8,5 @@ export type Roll = {
   iso: number;
   notes: string;
   status: RollStatus;
-  rollType: RollType;
+  rollColor: RollColor;
 };

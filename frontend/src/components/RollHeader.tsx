@@ -1,4 +1,6 @@
 import type { Roll } from "../types/roll";
+import "./RollDetails.css";
+import FilmColorIcon from "../utils/icons";
 
 type Props = {
   roll: Roll;
@@ -12,8 +14,15 @@ export default function RollHeader({ roll }: Props) {
             {roll.filmStock} – ISO {roll.iso}
         </p>
         <p>{roll.notes}</p>
-        <p>{roll.status}</p>
-        <p>{roll.rollType}</p>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
+          <span className={`status-badge ${roll.status.toLowerCase()}`}>
+            {roll.status === "IN_PROGRESS" ? "In Progress" : "Developed"}
+          </span>
+          <FilmColorIcon rollType={roll.rollColor} />
+          <span className={`roll-color-icon ${roll.rollColor.toLowerCase()}`}>
+            {roll.rollColor === "COLOR" ? "Color film" : "Black & white"}
+          </span>
         </div>
+    </div>
   );
 }
