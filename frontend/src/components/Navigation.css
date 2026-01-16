@@ -1,0 +1,21 @@
+nav ul {
+  display: flex;           
+  gap: 16px;               
+  list-style: none;        
+  padding: 0;              
+  margin: 0;               
+  align-items: center;     
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+}
+
+nav a:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-dark);
+}
