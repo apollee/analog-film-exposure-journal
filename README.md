@@ -108,7 +108,7 @@ The system is designed using a layered, cloud-native architecture on Microsoft A
 
 - **Azure Static Web Apps**
 - **Framework:** React
-- **Authentication:** Integrated using Azure AD B2C
+- **Authentication:** Integrated using Microsoft Entra External ID
 
 #### Backend (API Layer)
 
@@ -119,6 +119,16 @@ The system is designed using a layered, cloud-native architecture on Microsoft A
 
 - **Azure Cosmos DB** (NoSQL)
 - **Stores:** Film rolls, frames, and review data
+
+## Authentication Flow
+
+This application uses **Microsoft Entra External ID** to authenticate users.
+
+1. A user accesses the frontend application hosted on Azure Static Web Apps.
+2. When authentication is required, the user is redirected to Microsoft Entra External ID.
+3. After a successful login or sign-up, an access token (JWT) is issued.
+4. The frontend stores the token and includes it in requests to protected API endpoints.
+5. Azure Functions validate the token and authorize access to user-specific resources.
 
 ## Live Demo
 
