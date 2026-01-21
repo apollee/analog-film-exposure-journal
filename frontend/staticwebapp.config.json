@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "route": "/journal-rolls/*",
+      "allowedRoles": ["authenticated"]
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
+}
