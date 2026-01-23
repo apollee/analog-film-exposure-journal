@@ -1,11 +1,11 @@
 .frame-grid-container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 8px; /* can also use var(--space-sm) from theme.css */
+  gap: 8px;
 }
 
 .frame-grid-item {
-  border: 1px solid #ccc; /* or var(--border-subtle) */
-  padding: 12px; /* or var(--space-md) */
+  border: 1px solid #ccc; 
+  padding: 12px;
   text-align: center;
 }
