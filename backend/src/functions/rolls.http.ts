@@ -3,6 +3,7 @@ import { getRolls } from "../services/rolls.service";
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log("GET /rolls called");
+  
   return {
     jsonBody: getRolls(),
   };
