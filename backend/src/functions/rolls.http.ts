@@ -1,13 +1,6 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { getRolls } from "../services/rolls.service";
-
-function getUserFromHeader(req: HttpRequest) {
-  const principal = req.headers.get("x-ms-client-principal");
-  if (!principal) return null;
-
-  const decoded = Buffer.from(principal, "base64").toString("utf-8");
-  return JSON.parse(decoded);
-}
+import { getUserFromHeader } from "../utils/auth";
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log("GET /rolls called");
