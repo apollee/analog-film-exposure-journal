@@ -1,5 +1,7 @@
 import { Roll } from "../models/roll.model";
 
+const rolls: Roll[] = []; // In memory DB 
+
 const mockRolls: Roll[] = [
   {
     id: "1",
@@ -14,4 +16,9 @@ const mockRolls: Roll[] = [
 
 export function getRolls(): Roll[] {
   return mockRolls;
+}
+
+export function addRoll(roll: Roll): Roll {
+  rolls.push(roll);
+  return roll;
 }
