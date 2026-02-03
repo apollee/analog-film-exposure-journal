@@ -1,6 +1,11 @@
 {
   "routes": [
     {
+      "route": "/api/*",
+      "methods": ["GET", "POST"],
+      "allowedRoles": ["authenticated"]
+    },
+    {
       "route": "/journal-rolls/*",
       "allowedRoles": ["authenticated"]
     }
