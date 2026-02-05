@@ -63,16 +63,16 @@ export async function createRollHandler(req, context) {
   };
 }
 
-app.http("getRolls", {
-  methods: ["GET"],
-  authLevel: "anonymous", 
+app.http("rollsHandler", {
+  methods: ["GET", "POST"],
   route: "rolls",
-  handler: getRollsHandler,
-});
-
-app.http("createRoll", {
-  methods: ["POST"],
-  authLevel: "anonymous",
-  route: "rolls",
-  handler: createRollHandler,
+  handler: async (req, context) => {
+    if (req.method === "GET") {
+      return getRollsHandler(req, context);
+    } else if (req.method === "POST") {
+      return createRollHandler(req, context);
+    } else {
+      return { status: 405 };
+    }
+  },
 });
