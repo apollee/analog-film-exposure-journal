@@ -65,12 +65,14 @@ export async function createRollHandler(req, context) {
 
 app.http("getRolls", {
   methods: ["GET"],
+  authLevel: "anonymous", 
   route: "rolls",
   handler: getRollsHandler,
 });
 
 app.http("createRoll", {
   methods: ["POST"],
+  authLevel: "anonymous",
   route: "rolls",
   handler: createRollHandler,
 });
