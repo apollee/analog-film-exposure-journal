@@ -32,7 +32,6 @@ export async function getRollsHandler(req: HttpRequest, context: InvocationConte
 export async function createRollHandler(req, context) {
   context.log("CreateRollHandler is being hit");
   const user = getUserFromHeader(req);
-  return { status: 200 };
 
   if (!user) {
     return {

@@ -20,6 +20,7 @@ export default function CreateRoll() {
       filmStock,
       iso,
       notes,
+      rollType,
     });
 
     navigate("/journal-rolls");
