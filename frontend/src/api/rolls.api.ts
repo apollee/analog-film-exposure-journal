@@ -1,6 +1,7 @@
 import type { Roll } from "../types/roll";
 
 export async function fetchRolls(): Promise<Roll[]> {
+  console.log("Fetching rolls from API");
   const response = await fetch("/api/rolls", {
     credentials: "include",
   });
@@ -20,7 +21,9 @@ export async function createRoll(payload: {
   notes?: string;
   rollType: "COLOR" | "BW" | "";
 }) {
-  const response = await fetch("/api/rolls", {
+
+  console.log("Creating roll");
+  const response = await fetch("/api/rolls-test", {
     method: "POST",
     credentials: "include",
     headers: {
