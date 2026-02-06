@@ -9,7 +9,9 @@ export async function fetchRolls(): Promise<Roll[]> {
     throw new Error("Failed to fetch rolls");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data.rolls;
 }
 
 
@@ -34,5 +36,8 @@ export async function createRoll(payload: {
     throw new Error("Failed to create roll");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data;
+
 }
