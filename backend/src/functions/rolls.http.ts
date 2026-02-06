@@ -65,7 +65,7 @@ export async function createRollHandler(req, context) {
 
 app.http("rollsHandler", {
   methods: ["GET", "POST"],
-  route: "rolls-test",
+  route: "rolls",
   handler: async (req, context) => {
     if (req.method === "GET") {
       return getRollsHandler(req, context);
