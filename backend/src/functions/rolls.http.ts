@@ -72,7 +72,7 @@ app.http("rollsHandler", {
     } else if (req.method === "POST") {
       return createRollHandler(req, context);
     } else {
-      return { status: 405 };
+      return { status: 300 };
     }
   },
 });
