@@ -10,19 +10,34 @@ export default function CreateRoll() {
   const [iso, setIso] = useState(400);
   const [notes, setNotes] = useState("");
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    await createRoll({
-      name,
-      filmStock,
-      iso,
-      notes,
-      rollType,
-    });
+    try {
+      setLoading(true);
+      setError(null);
 
+      await createRoll({
+        name,
+        filmStock,
+        iso,
+        notes,
+        rollType,
+      });
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Failed to create roll");
+        }
+    } finally {
+      setLoading(false);
+    }
     navigate("/journal-rolls");
   }
 
@@ -44,6 +59,7 @@ export default function CreateRoll() {
         placeholder="Roll name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        required
       />
 
       <select
@@ -63,6 +79,7 @@ export default function CreateRoll() {
         type="number"
         value={iso}
         onChange={(e) => setIso(Number(e.target.value))}
+        required
       />
 
       <textarea
@@ -82,7 +99,13 @@ export default function CreateRoll() {
       </select>
       )}
 
-      <button type="submit">Save roll</button>
+      {error && (
+          <p style={{ color: "red" }}>{error}</p>
+        )}
+
+      <button type="submit" disabled={loading}>
+          {loading ? "Creating..." : "Create Roll"}
+        </button>
 
     </form>
 

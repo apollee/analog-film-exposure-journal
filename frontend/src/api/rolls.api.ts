@@ -6,7 +6,8 @@ export async function fetchRolls(): Promise<Roll[]> {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch rolls");
+    const errorText = await response.text();
+    throw new Error(errorText || "Failed to fetch rolls");
   }
 
   const data = await response.json();
