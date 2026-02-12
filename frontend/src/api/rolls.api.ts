@@ -21,7 +21,8 @@ export async function createRoll(payload: {
   filmStock: string;
   iso: number;
   notes?: string;
-  rollType: "COLOR" | "BW" | "";
+  rollType: "COLOR" | "BLACK_AND_WHITE" | "";
+  status: "IN_PROGRESS" | "DEVELOPED";
 }) {
 
   console.log("Creating roll");

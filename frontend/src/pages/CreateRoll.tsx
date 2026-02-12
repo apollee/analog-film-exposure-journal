@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreateRoll() {
   const [name, setName] = useState("");
   const [filmStock, setFilmStock] = useState("");
-  const [rollType, setRollType] = useState<"COLOR" | "BW" | "">("");
+  const [rollType, setRollType] = useState<"COLOR" | "BLACK_AND_WHITE" | "">("");
   const [iso, setIso] = useState(400);
   const [notes, setNotes] = useState("");
 
@@ -28,7 +28,9 @@ export default function CreateRoll() {
         iso,
         notes,
         rollType,
+        status: "IN_PROGRESS"
       });
+      navigate("/journal-rolls");
     } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -38,7 +40,6 @@ export default function CreateRoll() {
     } finally {
       setLoading(false);
     }
-    navigate("/journal-rolls");
   }
 
   function handleFilmStockChange(value: string) {
@@ -91,11 +92,11 @@ export default function CreateRoll() {
       {filmStock === "OTHER" && (
       <select
         value={rollType}
-        onChange={(e) => setRollType(e.target.value as "COLOR" | "BW")}
+        onChange={(e) => setRollType(e.target.value as "COLOR" | "BLACK_AND_WHITE")}
         >
         <option value="">Select film type</option>
         <option value="COLOR">Color</option>
-        <option value="BW">Black & White</option>
+        <option value="BLACK_AND_WHITE">Black & White</option>
       </select>
       )}
 
