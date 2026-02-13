@@ -25,7 +25,7 @@ The goal of this project is to provide a cloud-based journaling system that allo
 #### Authentication & User Management
 
 - User sign up and login
-- Secure authentication using Azure AD B2C
+- Secure authentication using Microsoft Entra External ID
 
 #### Film Roll Management
 

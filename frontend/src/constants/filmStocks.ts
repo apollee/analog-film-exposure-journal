@@ -1,4 +1,4 @@
-export type RollType = "COLOR" | "BW";
+export type RollType = "COLOR" | "BLACK_AND_WHITE";
 
 export const FILM_STOCKS = [
   { value: "KODAK_PORTRA_400", label: "Kodak Portra 400", type: "COLOR" },
