@@ -117,8 +117,64 @@ The system is designed using a layered, cloud-native architecture on Microsoft A
 
 #### Data Layer
 
-- **Azure Cosmos DB** (NoSQL)
-- **Stores:** Film rolls, frames, and review data
+The application uses **Azure Cosmos DB (Serverless)** with a multi-container design to support multi-user isolation, efficient queries, and scalable frame storage.
+
+##### Containers
+
+###### Rolls
+Stores film roll metadata.
+
+**Partition Key:** `/userId`
+
+This allows efficient retrieval of all rolls belonging to a specific user and provides natural tenant isolation.
+
+###### Frames
+Stores individual frame data, including exposure settings and optional review results.
+
+**Partition Key:** `/rollId`
+
+This enables efficient queries for retrieving all frames associated with a roll.
+
+##### Roll Document Structure
+
+Each roll represents a physical film roll created by a user.
+
+```json
+{
+  "id": "roll-123",
+  "userId": "user-456",
+  "name": "Lisbon Street Trip",
+  "filmStock": "Kodak Portra 400",
+  "iso": 400,
+  "notes": "Sunny afternoon",
+  "status": "in_progress",
+  "rollColor": "color",
+  "createdAt": "2026-02-18T18:00:00Z"
+}
+```
+
+##### Frame Document Structure
+
+Each frame represents a single exposure within a roll. Frame reviews are embedded inside the frame document and are only added after the roll is completed.
+
+```json
+{
+  "id": "frame-001",
+  "rollId": "roll-123",
+  "frameNumber": 1,
+  "aperture": "f/2.8",
+  "shutterSpeed": "1/125",
+  "notes": "Shot indoors",
+  "review": {
+    "status": "underexposed",
+    "notes": "Should have opened more the aperture",
+  }
+}
+```
+
+###### Business Rule
+
+Frame reviews can only be created when the roll status is set to completed. This rule is enforced at the API level.
 
 ## Authentication Flow
 
