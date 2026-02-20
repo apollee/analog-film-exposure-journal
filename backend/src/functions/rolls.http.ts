@@ -3,11 +3,11 @@ import { randomUUID } from "crypto";
 import { getRolls } from "../services/rolls.service";
 import { addRoll } from "../services/rolls.service";
 import { getUserFromHeader } from "../utils/auth";
-import { rollsContainer } from "../lib/cosmos";  
+import { rollsContainer } from "../library/cosmos";  
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log("GET /rolls called");
-  context.log(rollsContainer.id);
+  //context.log(rollsContainer.id);
   
   
   const user = getUserFromHeader(req);
