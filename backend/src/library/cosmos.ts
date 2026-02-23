@@ -1,20 +1,28 @@
 import { CosmosClient } from "@azure/cosmos";
 
-console.log("COSMOS MODULE LOADED");
+let client: CosmosClient | null = null;
 
-const client = new CosmosClient({
-  endpoint: process.env.COSMOS_ENDPOINT!,
-  key: process.env.COSMOS_KEY!,
-});
+function getClient() {
+  if (!client) {
+    if (!process.env.COSMOS_ENDPOINT || !process.env.COSMOS_KEY) {
+      throw new Error("Cosmos environment variables not configured");
+    }
 
-const database = client.database(process.env.COSMOS_DATABASE_NAME!);
+    client = new CosmosClient({
+      endpoint: process.env.COSMOS_ENDPOINT,
+      key: process.env.COSMOS_KEY,
+    });
+  }
 
-export const rollsContainer = database.container(
-  process.env.COSMOS_ROLLS_CONTAINER!
-);
+  return client;
+}
 
-export const framesContainer = database.container(
-  process.env.COSMOS_FRAMES_CONTAINER!
-);
+export function getRollsContainer() {
+  const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
+  return database.container(process.env.COSMOS_ROLLS_CONTAINER!);
+}
 
-console.log(rollsContainer.id);
+export function getFramesContainer() {
+  const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
+  return database.container(process.env.COSMOS_FRAMES_CONTAINER!);
+}
