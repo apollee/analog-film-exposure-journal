@@ -6,7 +6,7 @@ import { getUserFromHeader } from "../utils/auth";
 import { getRollsContainer } from "../library/cosmos";
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  context.log("GET /rolls called");
+  console.log("GET /rolls called");
   const rollsContainer = getRollsContainer();
   
   

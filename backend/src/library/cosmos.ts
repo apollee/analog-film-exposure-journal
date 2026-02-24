@@ -2,6 +2,8 @@ import { CosmosClient } from "@azure/cosmos";
 
 let client: CosmosClient | null = null;
 
+throw new Error("COSMOS FILE LOADED");
+
 function getClient() {
   if (!client) {
     if (!process.env.COSMOS_ENDPOINT || !process.env.COSMOS_KEY) {
