@@ -1,4 +1,5 @@
 import { CosmosClient } from "@azure/cosmos";
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 
 let client: CosmosClient | null = null;
 
@@ -18,11 +19,11 @@ function getClient() {
   return client;
 }
 
-export function getRollsContainer() {
-  console.log("Getting values from Cosmos client");
-  console.log("ENV ENDPOINT:", process.env.COSMOS_ENDPOINT);
-  console.log("ENV DB:", process.env.COSMOS_DATABASE_NAME);
-  console.log("ENV CONTAINER:", process.env.COSMOS_ROLLS_CONTAINER);
+export function getRollsContainer(context: InvocationContext) {
+  context.log("Getting values from Cosmos client");
+  context.log("ENV ENDPOINT:", process.env.COSMOS_ENDPOINT);
+  context.log("ENV DB:", process.env.COSMOS_DATABASE_NAME);
+  context.log("ENV CONTAINER:", process.env.COSMOS_ROLLS_CONTAINER);
   const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
 
   
