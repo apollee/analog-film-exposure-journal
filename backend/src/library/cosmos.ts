@@ -13,7 +13,6 @@ function getClient() {
       endpoint: process.env.COSMOS_ENDPOINT,
       key: process.env.COSMOS_KEY,
     });
-    throw new Error("COSMOS CLIENT WAS CREATED");
   }
 
   return client;
