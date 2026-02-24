@@ -23,9 +23,11 @@ export function getRollsContainer() {
   console.log("ENV ENDPOINT:", process.env.COSMOS_ENDPOINT);
   console.log("ENV DB:", process.env.COSMOS_DATABASE_NAME);
   console.log("ENV CONTAINER:", process.env.COSMOS_ROLLS_CONTAINER);
+  const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
+
   
   return { fake: true } as any;
-  const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
+  //const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
   return database.container(process.env.COSMOS_ROLLS_CONTAINER!);
 }
 
