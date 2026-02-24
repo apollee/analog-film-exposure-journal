@@ -2,8 +2,6 @@ import { CosmosClient } from "@azure/cosmos";
 
 let client: CosmosClient | null = null;
 
-throw new Error("COSMOS FILE LOADED");
-
 function getClient() {
   if (!client) {
     if (!process.env.COSMOS_ENDPOINT || !process.env.COSMOS_KEY) {
@@ -16,6 +14,8 @@ function getClient() {
     });
   }
 
+  console.log("Cosmos client initialized");
+
   return client;
 }
 
@@ -24,9 +24,10 @@ export function getRollsContainer() {
   console.log("ENV ENDPOINT:", process.env.COSMOS_ENDPOINT);
   console.log("ENV DB:", process.env.COSMOS_DATABASE_NAME);
   console.log("ENV CONTAINER:", process.env.COSMOS_ROLLS_CONTAINER);
-  
-  return { fake: true } as any;
   const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
+
+  return { fake: true } as any;
+  //const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
   return database.container(process.env.COSMOS_ROLLS_CONTAINER!);
 }
 
