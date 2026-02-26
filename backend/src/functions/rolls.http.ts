@@ -8,6 +8,7 @@ import { getRollsContainer } from "../library/cosmos";
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log("GET /rolls called");
   const rollsContainer = getRollsContainer(context);
+  context.log("Rolls container:", rollsContainer);
   
   
   const user = getUserFromHeader(req);
