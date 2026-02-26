@@ -1,24 +1,47 @@
-import { Roll } from "../models/roll.model";
+import { getRollsContainer } from "../library/cosmos";
 
-const rolls: Roll[] = []; // In memory DB 
-
-const mockRolls: Roll[] = [
-  {
-    id: "1",
-    name: "Lisbon Walk",
-    filmStock: "Kodak Portra 400",
-    iso: 400,
-    notes: "",
-    status: "IN_PROGRESS",
-    rollType: "COLOR",
-  },
-];
-
-export function getRolls(): Roll[] {
-  return mockRolls;
+export async function createRoll(roll: any) {
+  const container = getRollsContainer();
+  const { resource } = await container.items.create(roll);
+  return resource;
 }
 
-export function addRoll(roll: Roll): Roll {
-  rolls.push(roll);
-  return roll;
+export async function getRollsByUser(userId: string) {
+  const container = getRollsContainer();
+
+  const querySpec = {
+    query: "SELECT * FROM c WHERE c.userId = @userId",
+    parameters: [
+      { name: "@userId", value: userId }
+    ]
+  };
+
+  const { resources } = await container.items
+    .query(querySpec)
+    .fetchAll();
+
+  return resources;
+}
+
+export async function deleteRoll(id: string, userId: string) {
+  const container = getRollsContainer();
+
+  await container.item(id, userId).delete();
+}
+
+export async function updateRoll(id: string, userId: string, updates: any) {
+  const container = getRollsContainer();
+
+  const { resource } = await container.item(id, userId).read();
+
+  const updated = {
+    ...resource,
+    ...updates
+  };
+
+  const { resource: replaced } = await container
+    .item(id, userId)
+    .replace(updated);
+
+  return replaced;
 }

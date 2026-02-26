@@ -18,7 +18,7 @@ function getClient() {
   return client;
 }
 
-export function getRollsContainer(context: InvocationContext) {
+export function getRollsContainer() {
   const database = getClient().database(process.env.COSMOS_DATABASE_NAME!);
   return database.container(process.env.COSMOS_ROLLS_CONTAINER!);
 }

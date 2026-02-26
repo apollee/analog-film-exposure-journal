@@ -1,13 +1,12 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { randomUUID } from "crypto";
-import { getRolls } from "../services/rolls.service";
-import { addRoll } from "../services/rolls.service";
+import { getRollsByUser, createRoll } from "../services/rolls.service";
 import { getUserFromHeader } from "../utils/auth";
 import { getRollsContainer } from "../library/cosmos";
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log("GET /rolls called");
-  const rollsContainer = getRollsContainer(context);
+  const rollsContainer = getRollsContainer();
   context.log("Rolls container:", rollsContainer);
   
   
@@ -22,7 +21,7 @@ export async function getRollsHandler(req: HttpRequest, context: InvocationConte
   const userId = user.userId;
   context.log("User ID:", userId);
 
-  const rolls = getRolls();
+  const rolls = await getRollsByUser(userId);
 
   return {
     status: 200,
@@ -59,11 +58,11 @@ export async function createRollHandler(req, context) {
     rollType: body.rollType,
   };
 
-  addRoll(newRoll);
+  const savedRoll = await createRoll(newRoll);
 
   return {
     status: 201,
-    jsonBody: newRoll,
+    jsonBody: savedRoll,
   };
 }
 
