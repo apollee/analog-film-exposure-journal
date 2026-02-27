@@ -1,5 +1,5 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { getFrames } from "../services/frames.service";
+//import { getFrames } from "../services/frames.service";
 import { getUserFromHeader } from "../utils/auth";
 
 export async function getFramesHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
@@ -16,7 +16,7 @@ export async function getFramesHandler(req: HttpRequest, context: InvocationCont
   const userId = user.userId;
   context.log("User ID:", userId);
 
-  const frames = getFrames();
+  //const frames = getFrames();
 
   return {
     status: 200,
