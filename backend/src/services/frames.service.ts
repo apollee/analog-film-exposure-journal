@@ -44,8 +44,18 @@ export async function createFrame(userId: string, rollId: string, data: any) {
   return resource;
 }
 
-export async function getFramesByRoll(rollId: string) {
+export async function getFramesByRoll(userId: string, rollId: string) {
+  const rollsContainer = getRollsContainer();
   const framesContainer = getFramesContainer();
+
+  // Validate roll ownership
+  const { resource: roll } = await rollsContainer
+    .item(rollId, userId)
+    .read();
+
+  if (!roll) {
+    throw new Error("Roll not found");
+  }
 
   const { resources } = await framesContainer.items
     .query("SELECT * FROM c ORDER BY c.frameNumber ASC", {
