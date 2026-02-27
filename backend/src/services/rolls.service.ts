@@ -1,7 +1,21 @@
+import { randomUUID } from "crypto";
 import { getRollsContainer } from "../library/cosmos";
 
-export async function createRoll(roll: any) {
+export async function createRoll(userId: string, data: any) {
   const container = getRollsContainer();
+
+  const roll = {
+    id: randomUUID(),
+    userId,
+    name: data.name,
+    filmStock: data.filmStock,
+    iso: data.iso,
+    notes: data.notes ?? "",
+    status: data.status ?? "active", // default
+    rollType: data.rollType,
+    createdAt: new Date().toISOString()
+  };
+
   const { resource } = await container.items.create(roll);
   return resource;
 }

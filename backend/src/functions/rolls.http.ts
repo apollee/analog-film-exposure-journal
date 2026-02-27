@@ -33,37 +33,33 @@ export async function getRollsHandler(req: HttpRequest, context: InvocationConte
 }
 
 export async function createRollHandler(req, context) {
-  context.log("CreateRollHandler is being hit");
+  context.log("CreateRollHandler hit");
+
   const user = getUserFromHeader(req);
 
   if (!user) {
     return {
       status: 401,
-      jsonBody: { message: "No user authenticated"},
+      jsonBody: { message: "No user authenticated" },
     };
   }
-  const userId = user.userId;
-  context.log("User ID:", userId);
 
   const body = await req.json();
 
-  const newRoll = {
-    id: randomUUID(),
-    userId: user.userId,
-    name: body.name,
-    filmStock: body.filmStock,
-    iso: body.iso,
-    notes: body.notes ?? "",
-    status: body.status,
-    rollType: body.rollType,
-  };
+  try {
+    const savedRoll = await createRoll(user.userId, body);
 
-  const savedRoll = await createRoll(newRoll);
-
-  return {
-    status: 201,
-    jsonBody: savedRoll,
-  };
+    return {
+      status: 201,
+      jsonBody: savedRoll,
+    };
+  } catch (error) {
+    context.log("Error creating roll:", error);
+    return {
+      status: 500,
+      jsonBody: { message: "Failed to create roll" },
+    };
+  }
 }
 
 app.http("rollsHandler", {
