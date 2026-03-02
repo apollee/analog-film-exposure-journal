@@ -9,3 +9,15 @@
   padding: 12px;
   text-align: center;
 }
+
+.frame-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.frame-tile {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+}
