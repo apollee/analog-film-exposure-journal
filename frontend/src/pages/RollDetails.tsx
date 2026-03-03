@@ -16,41 +16,43 @@ export default function RollDetailsPage() {
   //unsure if this is the best way to get userId, but it works for now
   const userId = localStorage.getItem("userId") || "";
 
-  //fetch roll details
-  const fetchRoll = async () => {
-    const res = await fetch(`/api/rolls/${rollId}`, {
-      headers: {
-        "x-user-id": userId,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch roll");
-    }
-
-    const data = await res.json();
-    setRoll(data);
-  };
-
-  //fetch frames for the roll
-  const fetchFrames = async () => {
-    const res = await fetch(`/api/rolls/${rollId}/frames`, {
-      headers: {
-        "x-user-id": userId,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch frames");
-    }
-
-    const data = await res.json();
-    setFrames(data);
-  };
-
-  //loading
   useEffect(() => {
+    //loading
     if (!rollId) return;
+
+    const fetchFrames = async () => {
+      if (!rollId) return;
+
+      const res = await fetch(`/api/rolls/${rollId}/frames`, {
+        headers: {
+          "x-user-id": userId,
+        },
+      });
+
+      if (!res.ok) {
+        console.error("Failed to fetch frames");
+        return;
+      }
+
+      const data = await res.json();
+      setFrames(data);
+    };
+
+    //fetch roll details
+    const fetchRoll = async () => {
+      const res = await fetch(`/api/rolls/${rollId}`, {
+        headers: {
+          "x-user-id": userId,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch roll");
+      }
+
+      const data = await res.json();
+      setRoll(data);
+    };
 
     const loadData = async () => {
       try {
@@ -65,7 +67,7 @@ export default function RollDetailsPage() {
     };
 
     loadData();
-  }, [rollId]);
+  }, [rollId, userId]);
 
   //rendering
   if (loading) {
@@ -94,7 +96,23 @@ export default function RollDetailsPage() {
           <FrameForm
             rollId={roll.id}
             userId={userId}
-            onFrameCreated={fetchFrames}
+            onFrameCreated={() => {
+              if (!rollId) return;
+              const fetchFrames = async () => {
+                const res = await fetch(`/api/rolls/${rollId}/frames`, {
+                  headers: {
+                    "x-user-id": userId,
+                  },
+                });
+                if (!res.ok) {
+                  console.error("Failed to fetch frames");
+                  return;
+                }
+                const data = await res.json();
+                setFrames(data);
+              };
+              fetchFrames();
+            }}
           />
 
           <FrameList frames={frames} />

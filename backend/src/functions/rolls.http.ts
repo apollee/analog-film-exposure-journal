@@ -1,6 +1,6 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { randomUUID } from "crypto";
-import { getRollsByUser, createRoll } from "../services/rolls.service";
+import { getRollsByUser, getRollById, createRoll } from "../services/rolls.service";
 import { getUserFromHeader } from "../utils/auth";
 import { getRollsContainer } from "../library/cosmos";
 
@@ -62,6 +62,35 @@ export async function createRollHandler(req, context) {
   }
 }
 
+export async function getRollByIdHandler(req, context) {
+  context.log("GET /rolls/{id} called");
+
+  const user = getUserFromHeader(req);
+
+  if (!user) {
+    return {
+      status: 401,
+      jsonBody: { message: "No user authenticated" },
+    };
+  }
+
+  const rollId = req.params.id;
+
+  const roll = await getRollById(rollId, user.userId);
+
+  if (!roll) {
+    return {
+      status: 404,
+      jsonBody: { message: "Roll not found" },
+    };
+  }
+
+  return {
+    status: 200,
+    jsonBody: roll,
+  };
+}
+
 app.http("rollsHandler", {
   methods: ["GET", "POST"],
   route: "rolls",
@@ -74,4 +103,10 @@ app.http("rollsHandler", {
       return { status: 405 };
     }
   },
+});
+
+app.http("rollByIdHandler", {
+  methods: ["GET"],
+  route: "rolls/{id}",
+  handler: getRollByIdHandler,
 });

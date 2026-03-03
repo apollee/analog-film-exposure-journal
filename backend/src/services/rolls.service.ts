@@ -37,6 +37,17 @@ export async function getRollsByUser(userId: string) {
   return resources;
 }
 
+export async function getRollById(id: string, userId: string) {
+  const container = getRollsContainer();
+
+  try {
+    const { resource } = await container.item(id, userId).read();
+    return resource;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function deleteRoll(id: string, userId: string) {
   const container = getRollsContainer();
 
