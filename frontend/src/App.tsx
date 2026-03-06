@@ -20,7 +20,7 @@ function App() {
         <Route element={<JournalLayout />}>
           <Route path="/journal-rolls" element={<Rolls />} />
           <Route path="/journal-rolls/new" element={<CreateRoll />} />
-          <Route path="/journal-rolls/:id" element={<RollDetails />} />
+          <Route path="/journal-rolls/:rollId" element={<RollDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
