@@ -11,7 +11,7 @@ export async function createRoll(userId: string, data: any) {
     filmStock: data.filmStock,
     iso: data.iso,
     notes: data.notes ?? "",
-    status: data.status ?? "active", // default
+    status: data.status ?? "active", // change to in progress?
     rollType: data.rollType,
     createdAt: new Date().toISOString()
   };
