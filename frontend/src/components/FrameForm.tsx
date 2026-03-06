@@ -46,6 +46,7 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
         placeholder="Aperture (e.g. 2.8)"
         value={aperture}
         onChange={(e) => setAperture(e.target.value)}
+        required
       />
 
       <input
@@ -53,10 +54,11 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
         placeholder="Shutter Speed (e.g. 1/250)"
         value={shutterSpeed}
         onChange={(e) => setShutterSpeed(e.target.value)}
+        required
       />
 
       <textarea
-        placeholder="Notes"
+        placeholder="Notes (optional)"
         value={note}
         onChange={(e) => setNote(e.target.value)}
       />

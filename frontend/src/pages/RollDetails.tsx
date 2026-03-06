@@ -15,9 +15,7 @@ export default function RollDetailsPage() {
   const [frames, setFrames] = useState<Frame[]>([]);
   const [loading, setLoading] = useState(true);
 
-  //unsure if this is the best way to get userId, but it works for now
   const userId = localStorage.getItem("userId") || "";
-  console.log("userId from localStorage:", userId);
 
   useEffect(() => {
     //loading
