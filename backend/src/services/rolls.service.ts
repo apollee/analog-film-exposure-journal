@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { getRollsContainer } from "../library/cosmos";
 
 export async function createRoll(userId: string, data: any) {
-  const container = getRollsContainer();
+  const container = await getRollsContainer();
 
   const roll = {
     id: randomUUID(),
@@ -21,7 +21,7 @@ export async function createRoll(userId: string, data: any) {
 }
 
 export async function getRollsByUser(userId: string) {
-  const container = getRollsContainer();
+  const container = await getRollsContainer();
 
   const querySpec = {
     query: "SELECT * FROM c WHERE c.userId = @userId",
@@ -38,7 +38,7 @@ export async function getRollsByUser(userId: string) {
 }
 
 export async function getRollById(id: string, userId: string) {
-  const container = getRollsContainer();
+  const container = await getRollsContainer();
 
   try {
     const { resource } = await container.item(id, userId).read();
@@ -49,13 +49,13 @@ export async function getRollById(id: string, userId: string) {
 }
 
 export async function deleteRoll(id: string, userId: string) {
-  const container = getRollsContainer();
+  const container = await getRollsContainer();
 
   await container.item(id, userId).delete();
 }
 
 export async function updateRoll(id: string, userId: string, updates: any) {
-  const container = getRollsContainer();
+  const container = await getRollsContainer();
 
   const { resource } = await container.item(id, userId).read();
 

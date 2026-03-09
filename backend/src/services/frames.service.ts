@@ -3,8 +3,8 @@ import { getRollsContainer } from "../library/cosmos";
 import { randomUUID } from "crypto";
 
 export async function createFrame(userId: string, rollId: string, data: any) {
-  const rollsContainer = getRollsContainer();
-  const framesContainer = getFramesContainer();
+  const rollsContainer = await getRollsContainer();
+  const framesContainer = await getFramesContainer();
 
   const { resource: roll } = await rollsContainer
     .item(rollId, userId)
@@ -45,8 +45,8 @@ export async function createFrame(userId: string, rollId: string, data: any) {
 }
 
 export async function getFramesByRoll(userId: string, rollId: string) {
-  const rollsContainer = getRollsContainer();
-  const framesContainer = getFramesContainer();
+  const rollsContainer = await getRollsContainer();
+  const framesContainer = await getFramesContainer();
 
   // Validate roll ownership
   const { resource: roll } = await rollsContainer
@@ -72,8 +72,8 @@ export async function updateFrameReview(
   frameId: string,
   reviewData: any
 ) {
-  const rollsContainer = getRollsContainer();
-  const framesContainer = getFramesContainer();
+  const rollsContainer = await getRollsContainer();
+  const framesContainer = await getFramesContainer();
 
   const { resource: roll } = await rollsContainer
     .item(rollId, userId)
