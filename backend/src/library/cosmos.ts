@@ -1,5 +1,5 @@
 import { CosmosClient } from "@azure/cosmos";
-import { ManagedIdentityCredential } from "@azure/identity";
+import { ClientSecretCredential } from "@azure/identity";
 import { SecretClient } from "@azure/keyvault-secrets";
 
 let client: CosmosClient | null = null;
@@ -10,22 +10,19 @@ async function loadCosmosConfig(): Promise<{ endpoint: string; key: string }> {
   const endpointSecretName = process.env.COSMOS_ENDPOINT_SECRET_NAME;
   const keySecretName = process.env.COSMOS_KEY_SECRET_NAME;
 
+  const tenantId = process.env.KV_TENANT_ID;
+  const clientId = process.env.KV_CLIENT_ID;
+  const clientSecret = process.env.KV_CLIENT_SECRET;
+
   if (!vaultUrl) throw new Error("Missing KEY_VAULT_URL.");
   if (!endpointSecretName || !keySecretName) {
     throw new Error("Missing COSMOS_ENDPOINT_SECRET_NAME or COSMOS_KEY_SECRET_NAME.");
   }
+  if (!tenantId || !clientId || !clientSecret) {
+    throw new Error("Missing KV_TENANT_ID, KV_CLIENT_ID, or KV_CLIENT_SECRET.");
+  }
 
-  console.log("[cosmos] MI env", {
-    hasIdentityEndpoint: !!process.env.IDENTITY_ENDPOINT,
-    hasIdentityHeader: !!process.env.IDENTITY_HEADER,
-    hasMsiEndpoint: !!process.env.MSI_ENDPOINT,
-    hasMsiSecret: !!process.env.MSI_SECRET,
-  });
-
-  const credential = new ManagedIdentityCredential();
-
-  await credential.getToken("https://vault.azure.net/.default");
-
+  const credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
   const secretClient = new SecretClient(vaultUrl, credential);
 
   const [endpointSecret, keySecret] = await Promise.all([
