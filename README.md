@@ -191,4 +191,3 @@ This application uses **Microsoft Entra External ID** to authenticate users.
 The frontend is deployed using **Azure Static Web Apps** with GitHub-based CI/CD. Every push to `main` triggers an automatic build and deployment.
 
 🔗 Live URL: https://calm-sea-0d75bbc03.4.azurestaticapps.net
-

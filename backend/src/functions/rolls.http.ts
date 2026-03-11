@@ -1,30 +1,28 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { randomUUID } from "crypto";
 import { getRollsByUser, getRollById, createRoll } from "../services/rolls.service";
 import { getUserFromHeader } from "../utils/auth";
-import { getRollsContainer } from "../library/cosmos";
+import { getCorrelationContext, logError, logInfo, logWarn, withCorrelationHeader } from "../utils/logging";
 
 export async function getRollsHandler(req: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  context.log("GET /rolls called");
-  const rollsContainer = getRollsContainer();
-  context.log("Rolls container:", rollsContainer);
-  
-  
+  const logContext = getCorrelationContext(req);
+  logInfo(context, req, logContext, "rolls.list.request");
+
   const user = getUserFromHeader(req);
 
   if (!user) {
     return {
       status: 401,
-      jsonBody: { message: "No user authenticated"},
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "No user authenticated" },
     };
   }
   const userId = user.userId;
-  context.log("User ID:", userId);
 
   const rolls = await getRollsByUser(userId);
 
   return {
     status: 200,
+    headers: withCorrelationHeader(undefined, logContext.correlationId),
     jsonBody: {
       userId,
       rolls,
@@ -33,13 +31,15 @@ export async function getRollsHandler(req: HttpRequest, context: InvocationConte
 }
 
 export async function createRollHandler(req, context) {
-  context.log("CreateRollHandler hit");
+  const logContext = getCorrelationContext(req);
+  logInfo(context, req, logContext, "rolls.create.request");
 
   const user = getUserFromHeader(req);
 
   if (!user) {
     return {
       status: 401,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
       jsonBody: { message: "No user authenticated" },
     };
   }
@@ -51,25 +51,29 @@ export async function createRollHandler(req, context) {
 
     return {
       status: 201,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
       jsonBody: savedRoll,
     };
   } catch (error) {
-    context.log("Error creating roll:", error);
+    logError(context, req, logContext, "rolls.create.error", error);
     return {
       status: 500,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
       jsonBody: { message: "Failed to create roll" },
     };
   }
 }
 
 export async function getRollByIdHandler(req, context) {
-  context.log("GET /rolls/{id} called");
+  const logContext = getCorrelationContext(req);
+  logInfo(context, req, logContext, "rolls.get.request");
 
   const user = getUserFromHeader(req);
 
   if (!user) {
     return {
       status: 401,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
       jsonBody: { message: "No user authenticated" },
     };
   }
@@ -79,14 +83,17 @@ export async function getRollByIdHandler(req, context) {
   const roll = await getRollById(rollId, user.userId);
 
   if (!roll) {
+    logWarn(context, req, logContext, "rolls.get.not_found", { rollId, userId: user.userId });
     return {
       status: 404,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
       jsonBody: { message: "Roll not found" },
     };
   }
 
   return {
     status: 200,
+    headers: withCorrelationHeader(undefined, logContext.correlationId),
     jsonBody: roll,
   };
 }
