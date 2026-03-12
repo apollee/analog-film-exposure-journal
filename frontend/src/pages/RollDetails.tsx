@@ -17,8 +17,28 @@ export default function RollDetailsPage() {
 
   const userId = localStorage.getItem("userId") || "";
 
+  const updateRollStatus = async (status: "IN_PROGRESS" | "DEVELOPED") => {
+    if (!rollId) return;
+
+    const res = await fetch(`/api/rolls/${rollId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "x-user-id": userId,
+      },
+      body: JSON.stringify({ status }),
+    });
+
+    if (!res.ok) {
+      console.error("Failed to update roll status");
+      return;
+    }
+
+    const updated = await res.json();
+    setRoll(updated);
+  };
+
   useEffect(() => {
-    //loading
     if (!rollId) return;
 
     const fetchFrames = async () => {
@@ -39,7 +59,6 @@ export default function RollDetailsPage() {
       setFrames(data);
     };
 
-    //fetch roll details
     const fetchRoll = async () => {
       const res = await fetch(`/api/rolls/${rollId}`, {
         headers: {
@@ -70,7 +89,6 @@ export default function RollDetailsPage() {
     loadData();
   }, [rollId, userId]);
 
-  //rendering
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -89,10 +107,21 @@ export default function RollDetailsPage() {
 
       <p>Status: {roll.status}</p>
 
+      <div>
+        {roll.status === "IN_PROGRESS" ? (
+          <button type="button" onClick={() => updateRollStatus("DEVELOPED")}>
+            Mark as Developed
+          </button>
+        ) : (
+          <button type="button" onClick={() => updateRollStatus("IN_PROGRESS")}>
+            Mark as In Progress
+          </button>
+        )}
+      </div>
+
       {roll.status === "DEVELOPED" ? (
         <FrameGrid frames={frames} />
       ) : (
-        //in progress rolls show list
         <>
           <FrameForm
             rollId={roll.id}

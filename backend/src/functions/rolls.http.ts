@@ -1,5 +1,5 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { getRollsByUser, getRollById, createRoll } from "../services/rolls.service";
+import { getRollsByUser, getRollById, createRoll, updateRoll } from "../services/rolls.service";
 import { getUserFromHeader } from "../utils/auth";
 import { getCorrelationContext, logError, logInfo, logWarn, withCorrelationHeader } from "../utils/logging";
 
@@ -98,6 +98,59 @@ export async function getRollByIdHandler(req, context) {
   };
 }
 
+export async function updateRollStatusHandler(req, context) {
+  const logContext = getCorrelationContext(req);
+  logInfo(context, req, logContext, "rolls.update_status.request");
+
+  const user = getUserFromHeader(req);
+  if (!user) {
+    return {
+      status: 401,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "No user authenticated" },
+    };
+  }
+
+  const rollId = req.params.id;
+  if (!rollId) {
+    return {
+      status: 400,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "rollId is required" },
+    };
+  }
+
+  const body = await req.json();
+  const status = body?.status;
+
+  if (status !== "IN_PROGRESS" && status !== "DEVELOPED") {
+    return {
+      status: 400,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "Invalid status. Use IN_PROGRESS or DEVELOPED." },
+    };
+  }
+
+  try {
+    const updated = await updateRoll(rollId, user.userId, { status });
+    return {
+      status: 200,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: updated,
+    };
+  } catch (error) {
+    logError(context, req, logContext, "rolls.update_status.error", error, {
+      rollId,
+      userId: user.userId,
+    });
+    return {
+      status: 500,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "Failed to update roll status" },
+    };
+  }
+}
+
 app.http("rollsHandler", {
   methods: ["GET", "POST"],
   route: "rolls",
@@ -113,7 +166,16 @@ app.http("rollsHandler", {
 });
 
 app.http("rollByIdHandler", {
-  methods: ["GET"],
+  methods: ["GET", "PATCH"],
   route: "rolls/{id}",
-  handler: getRollByIdHandler,
+  handler: async (req, context) => {
+    if (req.method === "GET") {
+      return getRollByIdHandler(req, context);
+    } else if (req.method === "PATCH") {
+      return updateRollStatusHandler(req, context);
+    } else {
+      return { status: 405 };
+    }
+  },
 });
+
