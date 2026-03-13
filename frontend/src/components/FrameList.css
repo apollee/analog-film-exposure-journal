@@ -1,10 +1,75 @@
 .frame-list {
-  list-style: none;
-  padding: 0;
+  display: grid;
+  gap: var(--space-md);
 }
 
-.frame-list li {
-  padding: var(--space-sm);
-  border-bottom: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
+.frame-card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+}
+
+.frame-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.frame-note {
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+}
+
+.frame-card-meta {
+  display: flex;
+  gap: var(--space-md);
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.frame-card-notes {
+  margin-top: var(--space-sm);
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.empty-state {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  text-align: center;
+  background: #f8f3ec;
+}
+
+.empty-icon {
+  width: 42px;
+  height: 32px;
+  margin: 0 auto var(--space-sm);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+}
+
+.empty-icon::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+}
+
+.empty-title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.empty-sub {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
 }

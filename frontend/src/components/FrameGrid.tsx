@@ -9,11 +9,11 @@ type FrameGridProps = {
 function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed") {
   switch (exposure) {
     case "underexposed":
-      return "Under exposed";
+      return "Under";
     case "overexposed":
-      return "Over exposed";
+      return "Over";
     case "well-exposed":
-      return "Well exposed";
+      return "Good";
     default:
       return exposure;
   }
@@ -21,56 +21,41 @@ function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed"
 
 export default function FrameGrid({ frames, onReviewChange }: FrameGridProps) {
   if (frames.length === 0) {
-    return <p>No frames were shot on this roll.</p>;
+    return (
+      <div className="empty-state">
+        <div className="empty-icon" />
+        <p className="empty-title">No frames logged yet</p>
+        <p className="empty-sub">Add your first frame to begin</p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Developed Roll</h2>
-
-      <div className="frame-grid">
-        {frames.map((frame) => (
-          <div key={frame.id} className="frame-tile">
-            <div className="frame-number">#{frame.frameNumber}</div>
-
-            <div className="frame-settings">
-              f/{frame.settings.aperture} — {frame.settings.shutterSpeed}
-            </div>
-
-            {frame.review?.exposure && (
-              <div className={`frame-review ${frame.review.exposure}`}>
-                {exposureLabel(frame.review.exposure)}
-              </div>
-            )}
-
-            {onReviewChange && (
-              <div className="frame-review-actions">
-                <button
-                  type="button"
-                  className={`review-btn ${frame.review?.exposure === "underexposed" ? "active" : ""}`}
-                  onClick={() => onReviewChange(frame.id, "underexposed")}
-                >
-                  Under
-                </button>
-                <button
-                  type="button"
-                  className={`review-btn ${frame.review?.exposure === "well-exposed" ? "active" : ""}`}
-                  onClick={() => onReviewChange(frame.id, "well-exposed")}
-                >
-                  Well
-                </button>
-                <button
-                  type="button"
-                  className={`review-btn ${frame.review?.exposure === "overexposed" ? "active" : ""}`}
-                  onClick={() => onReviewChange(frame.id, "overexposed")}
-                >
-                  Over
-                </button>
-              </div>
-            )}
+    <div className="frame-grid">
+      {frames.map((frame) => (
+        <div
+          key={frame.id}
+          className={`frame-tile ${frame.review?.exposure ? `review-${frame.review.exposure}` : ""}`}
+        >
+          <div className="frame-tile-number">#{frame.frameNumber}</div>
+          <div className="frame-tile-meta">
+            <div>f/{frame.settings.aperture}</div>
+            <div>{frame.settings.shutterSpeed}</div>
           </div>
-        ))}
-      </div>
+          {frame.review?.exposure && (
+            <div className={`frame-review ${frame.review.exposure}`}>
+              [{exposureLabel(frame.review.exposure)}]
+            </div>
+          )}
+          {onReviewChange && (
+            <div className="frame-review-actions">
+              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "underexposed")}>Under</button>
+              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "well-exposed")}>Good</button>
+              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "overexposed")}>Over</button>
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,78 +1,117 @@
-.frame-grid-container {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-
-.frame-grid-item {
-  border: 1px solid #ccc; 
-  padding: 12px;
-  text-align: center;
-}
-
 .frame-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-lg);
 }
 
 .frame-tile {
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: center;
+  box-shadow: var(--shadow-card);
 }
 
-.frame-number {
-  font-weight: 600;
-  margin-bottom: 6px;
+.frame-tile.review-underexposed {
+  border-color: rgba(44, 90, 160, 0.5);
 }
 
-.frame-settings {
-  font-size: 0.9rem;
-  color: #444;
+.frame-tile.review-overexposed {
+  border-color: rgba(160, 67, 44, 0.5);
+}
+
+.frame-tile.review-well-exposed {
+  border-color: rgba(47, 107, 74, 0.5);
+}
+
+.frame-tile-number {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-sm);
+}
+
+.frame-tile-meta {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  display: grid;
+  gap: 4px;
 }
 
 .frame-review {
-  margin-top: 8px;
-  padding: 4px 8px;
-  border-radius: 12px;
+  margin-top: var(--space-sm);
   font-size: 0.8rem;
-  display: inline-block;
+  color: var(--ink);
 }
 
 .frame-review.underexposed {
-  background: #ffe3e3;
-  color: #8a1f1f;
+  color: #2c5aa0;
 }
 
 .frame-review.overexposed {
-  background: #ffe9cc;
-  color: #8a4b0a;
+  color: #a0432c;
 }
 
 .frame-review.well-exposed {
-  background: #e7f7ea;
-  color: #1f6b2c;
+  color: #2f6b4a;
 }
 
 .frame-review-actions {
-  margin-top: 8px;
+  margin-top: var(--space-sm);
   display: flex;
   gap: 6px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .review-btn {
-  border: 1px solid #bbb;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: #f7f2ec;
+  color: var(--ink);
   padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
 }
 
-.review-btn.active {
-  border-color: #111;
-  background: #111;
-  color: #fff;
+.review-btn:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.empty-state {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  text-align: center;
+  background: #f8f3ec;
+}
+
+.empty-icon {
+  width: 42px;
+  height: 32px;
+  margin: 0 auto var(--space-sm);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+}
+
+.empty-icon::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+}
+
+.empty-title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.empty-sub {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
 }

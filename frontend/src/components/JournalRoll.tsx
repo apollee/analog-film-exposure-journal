@@ -1,37 +1,29 @@
 import { Link } from "react-router-dom";
 import type { Roll } from "../types/roll";
 import "./JournalRoll.css";
-import FilmColorIcon from "../utils/icons";
 
-function StatusBadge({ status }: { status: "IN_PROGRESS" | "DEVELOPED" }) {
+function StatusPill({ status }: { status: "IN_PROGRESS" | "DEVELOPED" }) {
   return (
-    /*convert to lowercase for class naming*/
-    <span className={`status-badge ${status.toLowerCase()}`}> 
-      {status === "IN_PROGRESS" ? "In progress" : "Developed"}
+    <span className={`status-pill ${status.toLowerCase()}`}>
+      {status === "IN_PROGRESS" ? "EXP" : "DEV"}
     </span>
   );
 }
 
-
-export default function JournalRoll({
-  roll
-}: { roll: Roll }) {
+export default function JournalRoll({ roll }: { roll: Roll }) {
   return (
     <Link to={`/journal-rolls/${roll.id}`} className="roll-card">
-        <div className="roll-header">
-          <div className="roll-header-left" />
-          <h2 className="roll-title">{roll.name}</h2>
-          <StatusBadge status={roll.status} />
+      <div className="roll-card-accent" />
+      <div className="roll-card-content">
+        <div className="roll-card-top">
+          <div>
+            <h3 className="roll-title">{roll.name}</h3>
+            <p className="roll-sub">{roll.filmStock} / ISO {roll.iso}</p>
+            {roll.notes && <p className="roll-notes">{roll.notes}</p>}
+          </div>
+          <StatusPill status={roll.status} />
         </div>
-        <p>{roll.filmStock} – ISO {roll.iso}</p>
-
-        <div className="roll-meta">
-          <FilmColorIcon rollType={roll.rollColor} />
-          <p>
-            {roll.rollColor === "COLOR" ? "Color film" : "Black & white"}
-          </p>
-          <p>{roll.notes}</p>
-        </div>
+      </div>
     </Link>
   );
 }

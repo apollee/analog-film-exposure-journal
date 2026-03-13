@@ -2,9 +2,8 @@
 
 export default function FilmColorIcon({ rollType }: { rollType: "COLOR" | "BLACK_AND_WHITE" }) {
   return (
-    //TODO: Move class to a different css file
-    <span className="roll-color-icon"> 
-      {rollType === "COLOR" ? "🎨" : "⚫"}
+    <span className="roll-color-icon">
+      {rollType === "COLOR" ? "C" : "BW"}
     </span>
   );
 }

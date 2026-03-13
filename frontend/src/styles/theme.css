@@ -1,26 +1,44 @@
 :root {
+  /* Fonts */
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: "Courier New", "Courier", monospace;
+  --font-ui: "Arial", "Helvetica", sans-serif;
+
   /* Backgrounds */
-  --bg-page: #fafafa;
-  --bg-card: #ffffff;
+  --paper: #f7f2ec;
+  --paper-2: #f3ede4;
+  --paper-3: #efe7dd;
+  --card: #f9f5ef;
 
   /* Text */
-  --text-primary: #222222;
-  --text-secondary: #555555;
-  --text-muted: #777777;
+  --ink: #2b2723;
+  --ink-muted: #6b6157;
+  --ink-faint: #9a9086;
+
+  /* Accents */
+  --accent-rose: #d7a3a0;
+  --accent-green: #4a8f73;
+  --accent-ink: #2b2723;
 
   /* Borders */
-  --border-subtle: #e5e5e5;
+  --border: #c9c0b6;
+  --border-strong: #b6ada3;
 
-  /* Accent */
-  --accent: #ffbe0b; 
+  /* Shadows */
+  --shadow-soft: 0 10px 30px rgba(43, 39, 35, 0.08);
+  --shadow-card: 0 6px 18px rgba(43, 39, 35, 0.08);
 
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
 
   /* Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
 }

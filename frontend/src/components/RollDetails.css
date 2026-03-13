@@ -1,26 +1,81 @@
-/* ---------------- Status Badge ---------------- */
+.roll-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
 
-.status-badge {
-display: inline-block;
+.roll-detail-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-md);
+}
+
+.back-button {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  background: #faf6f1;
+  font-size: 0.9rem;
+}
+
+.roll-detail-title h1 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.roll-meta-line {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+.roll-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.status-pill {
   padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  text-align: center;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  border: 1px solid var(--border);
+  background: #f5eee6;
 }
 
-.status-badge.in_progress {
-  background: #fff4cc;
-  color: #8a6d00;
+.status-pill.in_progress {
+  color: var(--ink);
 }
 
-.status-badge.developed {
-  background: #e6f4ea;
-  color: #1e7f3b;
+.status-pill.developed {
+  color: var(--accent-green);
+  border-color: rgba(74, 143, 115, 0.5);
+  background: #f0f6f2;
 }
 
-/* ---------------- Roll Meta ---------------- */
+.ghost-btn {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+}
 
-.roll-color-icon {
-  font-size: 18px;
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-md);
+}
+
+.roll-shooting,
+.roll-review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
 }

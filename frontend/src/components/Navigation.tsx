@@ -1,21 +1,35 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import "./Navigation.css"
+import "./Navigation.css";
 
 export default function Navigation() {
   const user = useAuth();
 
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        <li><Link to="/journal-rolls">Journal Rolls</Link></li>
-        <li><Link to="/journal-rolls/new">Create Roll</Link></li>
-        <li><Link to="/journal-rolls/123">Roll Details (dev)</Link></li>
-      </ul>
-      <nav>{user && <span>{user.userDetails}</span>}</nav>
-    </nav>
-    
+    <header className="top-nav">
+      <div className="brand">
+        <span className="brand-mark" aria-hidden />
+        <span className="brand-title">Analog Journal</span>
+      </div>
+
+      <nav className="nav-links">
+        <Link to="/journal-rolls">My Rolls</Link>
+      </nav>
+
+      <div className="nav-user">
+        {user ? (
+          <>
+            <span className="user-chip">{user.userDetails}</span>
+            <a className="icon-link" href="/.auth/logout?post_logout_redirect_uri=/">
+              Logout
+            </a>
+          </>
+        ) : (
+          <a className="icon-link" href="/.auth/login/aad?post_login_redirect_uri=/journal-rolls">
+            Login
+          </a>
+        )}
+      </div>
+    </header>
   );
 }

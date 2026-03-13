@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FrameForm from "../components/FrameForm";
 import FrameList from "../components/FrameList";
 import FrameGrid from "../components/FrameGrid";
 import type { Frame } from "../types/frame";
 import type { Roll } from "../types/roll";
+import "../components/RollDetails.css";
 
 export default function RollDetailsPage() {
   const { rollId } = useParams<{ rollId: string }>();
-
-  console.log("rollId from params:", rollId);
 
   const [roll, setRoll] = useState<Roll | null>(null);
   const [frames, setFrames] = useState<Frame[]>([]);
@@ -124,31 +123,42 @@ export default function RollDetailsPage() {
   }
 
   return (
-    <div>
-      <h1>{roll.name}</h1>
-
-      <p>
-        Film: {roll.filmStock} | ISO: {roll.iso}
-      </p>
-
-      <p>Status: {roll.status}</p>
-
-      <div>
-        {roll.status === "IN_PROGRESS" ? (
-          <button type="button" onClick={() => updateRollStatus("DEVELOPED")}>
-            Mark as Developed
+    <section className="roll-detail">
+      <header className="roll-detail-header">
+        <Link to="/journal-rolls" className="back-button">
+          &lt;
+        </Link>
+        <div className="roll-detail-title">
+          <h1>{roll.name}</h1>
+          <p className="roll-meta-line">
+            {roll.filmStock} / ISO {roll.iso}
+          </p>
+        </div>
+        <div className="roll-detail-actions">
+          <span className={`status-pill ${roll.status.toLowerCase()}`}>
+            {roll.status === "IN_PROGRESS" ? "EXP" : "DEV"}
+          </span>
+          <button
+            type="button"
+            className="ghost-btn"
+            onClick={() =>
+              updateRollStatus(
+                roll.status === "IN_PROGRESS" ? "DEVELOPED" : "IN_PROGRESS"
+              )
+            }
+          >
+            {roll.status === "IN_PROGRESS" ? "Mark as Developed" : "Mark as In Progress"}
           </button>
-        ) : (
-          <button type="button" onClick={() => updateRollStatus("IN_PROGRESS")}>
-            Mark as In Progress
-          </button>
-        )}
-      </div>
+        </div>
+      </header>
 
       {roll.status === "DEVELOPED" ? (
-        <FrameGrid frames={frames} onReviewChange={handleReviewChange} />
+        <section className="roll-review">
+          <div className="section-title">Review Exposures</div>
+          <FrameGrid frames={frames} onReviewChange={handleReviewChange} />
+        </section>
       ) : (
-        <>
+        <section className="roll-shooting">
           <FrameForm
             rollId={roll.id}
             userId={userId}
@@ -172,8 +182,8 @@ export default function RollDetailsPage() {
           />
 
           <FrameList frames={frames} />
-        </>
+        </section>
       )}
-    </div>
+    </section>
   );
 }
