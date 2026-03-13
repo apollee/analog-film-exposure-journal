@@ -38,6 +38,32 @@ export default function RollDetailsPage() {
     setRoll(updated);
   };
 
+  const handleReviewChange = async (
+    frameId: string,
+    exposure: "underexposed" | "overexposed" | "well-exposed"
+  ) => {
+    if (!rollId) return;
+
+    const res = await fetch(`/api/rolls/${rollId}/frames/${frameId}/review`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "x-user-id": userId,
+      },
+      body: JSON.stringify({ review: { exposure } }),
+    });
+
+    if (!res.ok) {
+      console.error("Failed to update frame review");
+      return;
+    }
+
+    const updated = await res.json();
+    setFrames((prev) =>
+      prev.map((frame) => (frame.id === updated.id ? updated : frame))
+    );
+  };
+
   useEffect(() => {
     if (!rollId) return;
 
@@ -120,7 +146,7 @@ export default function RollDetailsPage() {
       </div>
 
       {roll.status === "DEVELOPED" ? (
-        <FrameGrid frames={frames} />
+        <FrameGrid frames={frames} onReviewChange={handleReviewChange} />
       ) : (
         <>
           <FrameForm
