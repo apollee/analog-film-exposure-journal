@@ -40,9 +40,10 @@
 .status-pill {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   border: 1px solid var(--border);
   background: #f5eee6;
+  white-space: nowrap;
 }
 
 .status-pill.in_progress {

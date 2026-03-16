@@ -14,7 +14,6 @@
 }
 
 .primary-btn {
-  width: 100%;
   background: #7f7770;
   border-color: #7f7770;
   color: #f6f1ea;
@@ -65,6 +64,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+}
+
+.modal-form .primary-btn {
+  width: 100%;
 }
 
 .modal-form label {

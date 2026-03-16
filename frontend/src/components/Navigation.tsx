@@ -12,10 +12,6 @@ export default function Navigation() {
         <span className="brand-title">Analog Journal</span>
       </div>
 
-      <nav className="nav-links">
-        <Link to="/journal-rolls">My Rolls</Link>
-      </nav>
-
       <div className="nav-user">
         {user ? (
           <>

@@ -1,8 +1,8 @@
 :root {
   /* Fonts */
-  --font-display: "Georgia", "Times New Roman", serif;
-  --font-body: "Courier New", "Courier", monospace;
-  --font-ui: "Arial", "Helvetica", sans-serif;
+  --font-display: "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+  --font-body: "Trebuchet MS", "Verdana", sans-serif;
+  --font-ui: "Trebuchet MS", "Verdana", sans-serif;
 
   /* Backgrounds */
   --paper: #f7f2ec;
