@@ -95,7 +95,7 @@ export async function updateFrameReview(
   }
 
   frame.review = {
-    result: reviewData.result,
+    exposure: reviewData.exposure,
     note: reviewData.note || ""
   };
 
