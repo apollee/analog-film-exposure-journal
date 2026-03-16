@@ -82,7 +82,7 @@ export async function updateFrameReview(
     throw new Error("Roll not found");
   }
 
-  if (roll.status !== "developed") {
+  if (roll.status !== "DEVELOPED") {
     throw new Error("Roll is not developed yet");
   }
 
