@@ -43,9 +43,12 @@ export default function Rolls() {
   return (
     <section className="rolls-page">
       <header className="rolls-header">
-        <div>
-          <h1>My Rolls</h1>
-          <p className="rolls-sub">{rolls.length} rolls in journal</p>
+        <div className="rolls-title">
+          <span className="rolls-accent" aria-hidden />
+          <div>
+            <h1>My Rolls</h1>
+            <p className="rolls-sub">{rolls.length} rolls in journal</p>
+          </div>
         </div>
         <Link className="primary-btn" to="/journal-rolls/new">
           + New Roll

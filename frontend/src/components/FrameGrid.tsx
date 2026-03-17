@@ -4,6 +4,7 @@ import type { Frame } from "../types/frame";
 type FrameGridProps = {
   frames: Frame[];
   onReviewChange?: (frameId: string, exposure: "underexposed" | "overexposed" | "well-exposed") => void;
+  rollIso?: number;
 };
 
 function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed") {
@@ -19,7 +20,7 @@ function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed"
   }
 }
 
-export default function FrameGrid({ frames, onReviewChange }: FrameGridProps) {
+export default function FrameGrid({ frames, onReviewChange, rollIso }: FrameGridProps) {
   if (frames.length === 0) {
     return (
       <div className="empty-state">
@@ -38,9 +39,25 @@ export default function FrameGrid({ frames, onReviewChange }: FrameGridProps) {
           className={`frame-tile ${frame.review?.exposure ? `review-${frame.review.exposure}` : ""}`}
         >
           <div className="frame-tile-number">#{frame.frameNumber}</div>
-          <div className="frame-tile-meta">
-            <div>f/{frame.settings.aperture}</div>
-            <div>{frame.settings.shutterSpeed}</div>
+          <div className="frame-tile-info">
+            <div className="frame-row">
+              <span className="frame-label">ISO</span>
+              <span>{rollIso ?? "-"}</span>
+            </div>
+            <div className="frame-row">
+              <span className="frame-label">f/</span>
+              <span>{frame.settings.aperture}</span>
+            </div>
+            <div className="frame-row">
+              <span className="frame-label">Spd</span>
+              <span>{frame.settings.shutterSpeed}</span>
+            </div>
+            {frame.note && (
+              <div className="frame-row">
+                <span className="frame-label">Note</span>
+                <span>{frame.note}</span>
+              </div>
+            )}
           </div>
           {frame.review?.exposure && (
             <div className={`frame-review ${frame.review.exposure}`}>

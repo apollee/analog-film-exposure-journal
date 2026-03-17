@@ -1,8 +1,8 @@
 :root {
   /* Fonts */
-  --font-display: "Palatino Linotype", "Book Antiqua", "Palatino", serif;
-  --font-body: "Trebuchet MS", "Verdana", sans-serif;
-  --font-ui: "Trebuchet MS", "Verdana", sans-serif;
+  --font-display: "Special Elite", "Courier New", monospace;
+  --font-body: "Courier Prime", "Courier New", monospace;
+  --font-ui: "Courier Prime", "Courier New", monospace;
 
   /* Backgrounds */
   --paper: #f7f2ec;

@@ -15,14 +15,17 @@
 
 .frame-tile.review-underexposed {
   border-color: rgba(44, 90, 160, 0.5);
+  background: #f0f5ff;
 }
 
 .frame-tile.review-overexposed {
   border-color: rgba(160, 67, 44, 0.5);
+  background: #fff0eb;
 }
 
 .frame-tile.review-well-exposed {
   border-color: rgba(47, 107, 74, 0.5);
+  background: #f0f7f2;
 }
 
 .frame-tile-number {
@@ -31,11 +34,25 @@
   margin-bottom: var(--space-sm);
 }
 
-.frame-tile-meta {
+.frame-tile-info {
   font-size: 0.8rem;
   color: var(--ink-muted);
   display: grid;
-  gap: 4px;
+  gap: 6px;
+  text-align: left;
+}
+
+.frame-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.frame-label {
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
 }
 
 .frame-review {

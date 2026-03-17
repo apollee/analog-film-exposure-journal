@@ -13,7 +13,6 @@ function StatusPill({ status }: { status: "IN_PROGRESS" | "DEVELOPED" }) {
 export default function JournalRoll({ roll }: { roll: Roll }) {
   return (
     <Link to={`/journal-rolls/${roll.id}`} className="roll-card">
-      <div className="roll-card-accent" />
       <div className="roll-card-content">
         <div className="roll-card-top">
           <div>

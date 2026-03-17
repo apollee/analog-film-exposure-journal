@@ -155,7 +155,7 @@ export default function RollDetailsPage() {
       {roll.status === "DEVELOPED" ? (
         <section className="roll-review">
           <div className="section-title">Review Exposures</div>
-          <FrameGrid frames={frames} onReviewChange={handleReviewChange} />
+          <FrameGrid frames={frames} onReviewChange={handleReviewChange} rollIso={roll.iso} />
         </section>
       ) : (
         <section className="roll-shooting">

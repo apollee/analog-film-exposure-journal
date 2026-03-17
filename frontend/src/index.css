@@ -1,5 +1,41 @@
 @import "./styles/theme.css";
 
+@font-face {
+  font-family: "Special Elite";
+  src: url("/fonts/SpecialElite-Regular.woff2") format("woff2"),
+       url("/fonts/SpecialElite-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Courier Prime";
+  src: url("/fonts/CourierPrime-Regular.woff2") format("woff2"),
+       url("/fonts/CourierPrime-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Courier Prime";
+  src: url("/fonts/CourierPrime-Bold.woff2") format("woff2"),
+       url("/fonts/CourierPrime-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Courier Prime";
+  src: url("/fonts/CourierPrime-Italic.woff2") format("woff2"),
+       url("/fonts/CourierPrime-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   font-family: var(--font-body);
   line-height: 1.6;
@@ -18,10 +54,6 @@
 body {
   margin: 0;
   background-color: var(--paper);
-  background-image:
-    radial-gradient(1200px 600px at 20% 0%, #fbf7f2 0%, rgba(251, 247, 242, 0.4) 40%, rgba(247, 242, 236, 0) 70%),
-    radial-gradient(1200px 700px at 80% 20%, rgba(246, 239, 231, 0.7) 0%, rgba(246, 239, 231, 0) 60%),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.018) 0, rgba(0, 0, 0, 0.018) 1px, transparent 1px, transparent 4px);
   color: var(--ink);
 }
 

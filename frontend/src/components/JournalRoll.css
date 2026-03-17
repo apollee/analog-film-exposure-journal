@@ -1,7 +1,5 @@
 .roll-card {
-  display: grid;
-  grid-template-columns: 6px 1fr;
-  gap: var(--space-md);
+  display: block;
   padding: var(--space-md);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -12,12 +10,6 @@
 
 .roll-card:hover {
   border-color: var(--border-strong);
-}
-
-.roll-card-accent {
-  width: 4px;
-  background: var(--accent-rose);
-  border-radius: var(--radius-pill);
 }
 
 .roll-card-top {
