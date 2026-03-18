@@ -5,7 +5,7 @@ import "./JournalRoll.css";
 function StatusPill({ status }: { status: "IN_PROGRESS" | "DEVELOPED" }) {
   return (
     <span className={`status-pill ${status.toLowerCase()}`}>
-      {status === "IN_PROGRESS" ? "Shooting" : "Developed"}
+      {status === "IN_PROGRESS" ? "SHOOTING" : "DEV"}
     </span>
   );
 }

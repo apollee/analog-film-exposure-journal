@@ -40,20 +40,23 @@
 .status-pill {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.72rem;
-  border: 1px solid var(--border);
-  background: #f5eee6;
+  font-size: 0.7rem;
+  border: 2px solid var(--border-strong);
+  background: transparent;
   white-space: nowrap;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .status-pill.in_progress {
   color: var(--ink);
+  border-color: var(--ink-muted);
 }
 
 .status-pill.developed {
   color: var(--accent-green);
-  border-color: rgba(74, 143, 115, 0.5);
-  background: #f0f6f2;
+  border-color: var(--accent-green);
 }
 
 .ghost-btn {

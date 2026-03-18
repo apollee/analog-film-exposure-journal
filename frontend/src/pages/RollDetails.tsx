@@ -136,7 +136,7 @@ export default function RollDetailsPage() {
         </div>
         <div className="roll-detail-actions">
           <span className={`status-pill ${roll.status.toLowerCase()}`}>
-            {roll.status === "IN_PROGRESS" ? "Shooting" : "Developed"}
+            {roll.status === "IN_PROGRESS" ? "SHOOTING" : "DEV"}
           </span>
           <button
             type="button"

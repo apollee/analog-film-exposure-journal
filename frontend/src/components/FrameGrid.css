@@ -5,27 +5,27 @@
 }
 
 .frame-tile {
-  border: 1px solid var(--border);
+  border: 2px solid var(--border-strong);
   background: var(--card);
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   padding: var(--space-md);
   text-align: center;
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
 }
 
 .frame-tile.review-underexposed {
-  border-color: rgba(44, 90, 160, 0.5);
-  background: #f0f5ff;
+  border-color: #8aa1d8;
+  background: #f2f5ff;
 }
 
 .frame-tile.review-overexposed {
-  border-color: rgba(160, 67, 44, 0.5);
-  background: #fff0eb;
+  border-color: #d7a3a0;
+  background: #fff3ee;
 }
 
 .frame-tile.review-well-exposed {
-  border-color: rgba(47, 107, 74, 0.5);
-  background: #f0f7f2;
+  border-color: #7eb599;
+  background: #f1f7f3;
 }
 
 .frame-tile-number {
@@ -59,6 +59,8 @@
   margin-top: var(--space-sm);
   font-size: 0.8rem;
   color: var(--ink);
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
 }
 
 .frame-review.underexposed {

@@ -38,18 +38,21 @@
 .status-pill {
   padding: 4px 10px;
   border-radius: var(--radius-pill);
-  font-size: 0.72rem;
-  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  border: 2px solid var(--border-strong);
   white-space: nowrap;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: transparent;
 }
 
 .status-pill.in_progress {
   color: var(--ink);
-  background: #f5eee6;
+  border-color: var(--ink-muted);
 }
 
 .status-pill.developed {
   color: var(--accent-green);
-  border-color: rgba(74, 143, 115, 0.5);
-  background: #f0f6f2;
+  border-color: var(--accent-green);
 }
