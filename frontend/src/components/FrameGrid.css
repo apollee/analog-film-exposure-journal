@@ -1,14 +1,14 @@
 .frame-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
 }
 
 .frame-tile {
   border: 2px solid var(--border-strong);
   background: var(--card);
-  border-radius: 8px;
-  padding: var(--space-md);
+  border-radius: 6px;
+  padding: var(--space-sm);
   text-align: center;
   box-shadow: none;
 }
@@ -30,15 +30,15 @@
 
 .frame-tile-number {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  margin-bottom: var(--space-sm);
+  font-size: 1rem;
+  margin-bottom: var(--space-xs);
 }
 
 .frame-tile-info {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--ink-muted);
   display: grid;
-  gap: 6px;
+  gap: 4px;
   text-align: left;
 }
 
@@ -55,8 +55,12 @@
   letter-spacing: 0.5px;
 }
 
+.frame-row span:last-child {
+  color: var(--ink);
+}
+
 .frame-review {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
   font-size: 0.8rem;
   color: var(--ink);
   font-family: var(--font-display);
@@ -76,7 +80,7 @@
 }
 
 .frame-review-actions {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
   display: flex;
   gap: 6px;
   justify-content: center;

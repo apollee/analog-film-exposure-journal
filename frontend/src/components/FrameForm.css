@@ -55,8 +55,8 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  background: #f7f2ec;
-  border: 1px solid var(--border);
+  background: transparent;
+  border: none;
   font-size: 1rem;
   width: 28px;
   height: 28px;
@@ -87,5 +87,5 @@
   gap: 6px;
   font-size: 0.85rem;
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 400;
 }
