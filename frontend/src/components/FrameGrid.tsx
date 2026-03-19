@@ -3,7 +3,8 @@ import type { Frame } from "../types/frame";
 
 type FrameGridProps = {
   frames: Frame[];
-  onReviewChange?: (frameId: string, exposure: "underexposed" | "overexposed" | "well-exposed") => void;
+  onSelectFrame?: (frameId: string) => void;
+  selectedFrameId?: string | null;
   rollIso?: number;
 };
 
@@ -20,7 +21,7 @@ function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed"
   }
 }
 
-export default function FrameGrid({ frames, onReviewChange, rollIso }: FrameGridProps) {
+export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, rollIso }: FrameGridProps) {
   if (frames.length === 0) {
     return (
       <div className="empty-state">
@@ -33,11 +34,26 @@ export default function FrameGrid({ frames, onReviewChange, rollIso }: FrameGrid
 
   return (
     <div className="frame-grid">
-      {frames.map((frame) => (
-        <div
-          key={frame.id}
-          className={`frame-tile ${frame.review?.exposure ? `review-${frame.review.exposure}` : ""}`}
-        >
+      {frames.map((frame) => {
+        const isSelected = selectedFrameId === frame.id;
+        return (
+          <div
+            key={frame.id}
+            className={`frame-tile ${frame.review?.exposure ? `review-${frame.review.exposure}` : ""} ${onSelectFrame ? "is-selectable" : ""} ${isSelected ? "is-selected" : ""}`}
+            role={onSelectFrame ? "button" : undefined}
+            tabIndex={onSelectFrame ? 0 : undefined}
+            onClick={onSelectFrame ? () => onSelectFrame(frame.id) : undefined}
+            onKeyDown={
+              onSelectFrame
+                ? (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      onSelectFrame(frame.id);
+                    }
+                  }
+                : undefined
+            }
+          >
           <div className="frame-tile-number">#{frame.frameNumber}</div>
           <div className="frame-tile-info">
             <div className="frame-row">
@@ -45,11 +61,11 @@ export default function FrameGrid({ frames, onReviewChange, rollIso }: FrameGrid
               <span>{rollIso ?? "-"}</span>
             </div>
             <div className="frame-row">
-              <span className="frame-label">f/</span>
+              <span className="frame-label">Aperture</span>
               <span>{frame.settings.aperture}</span>
             </div>
             <div className="frame-row">
-              <span className="frame-label">Spd</span>
+              <span className="frame-label">Shutter Speed</span>
               <span>{frame.settings.shutterSpeed}</span>
             </div>
             {frame.note && (
@@ -64,15 +80,9 @@ export default function FrameGrid({ frames, onReviewChange, rollIso }: FrameGrid
               [{exposureLabel(frame.review.exposure)}]
             </div>
           )}
-          {onReviewChange && (
-            <div className="frame-review-actions">
-              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "underexposed")}>Under</button>
-              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "well-exposed")}>Good</button>
-              <button type="button" className="review-btn" onClick={() => onReviewChange(frame.id, "overexposed")}>Over</button>
-            </div>
-          )}
-        </div>
-      ))}
+          </div>
+        );
+      })}
     </div>
   );
 }

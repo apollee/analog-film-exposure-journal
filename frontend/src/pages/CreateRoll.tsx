@@ -67,7 +67,7 @@ export default function CreateRoll() {
           x
         </button>
         <h1>New Film Roll</h1>
-        <p className="create-roll-sub">Start a new exposure log</p>
+        <p className="create-roll-sub">Start a new roll entry in the journal</p>
 
         <div className="create-roll-fields">
           <label>

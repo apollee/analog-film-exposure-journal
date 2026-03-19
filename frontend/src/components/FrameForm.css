@@ -13,14 +13,6 @@
   font-size: 0.8rem;
 }
 
-.primary-btn {
-  background: #7f7770;
-  border-color: #7f7770;
-  color: #f6f1ea;
-  padding: 10px 16px;
-  border-radius: var(--radius-md);
-}
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -54,7 +46,7 @@
 .modal-close {
   position: absolute;
   top: 12px;
-  right: 12px;
+  right: 20px;
   background: transparent;
   border: none;
   font-size: 1.2rem;
@@ -87,6 +79,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: #7f7770;
+  border-color: #7f7770;
+  color: #f6f1ea;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
 }
 
 .modal-form label {

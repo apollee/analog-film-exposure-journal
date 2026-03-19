@@ -1,9 +1,26 @@
 export type RollType = "COLOR" | "BLACK_AND_WHITE";
 
 export const FILM_STOCKS = [
+  { value: "KODAK_PORTRA_160", label: "Kodak Portra 160", type: "COLOR" },
   { value: "KODAK_PORTRA_400", label: "Kodak Portra 400", type: "COLOR" },
+  { value: "KODAK_PORTRA_800", label: "Kodak Portra 800", type: "COLOR" },
   { value: "KODAK_GOLD_200", label: "Kodak Gold 200", type: "COLOR" },
-  { value: "ILFORD_HP5", label: "Ilford HP5", type: "BLACK_AND_WHITE" },
-  { value: "FUJI_SUPERIA", label: "Fuji Superia", type: "COLOR" },
+  { value: "KODAK_ULTRAMAX_400", label: "Kodak Ultramax 400", type: "COLOR" },
+  { value: "KODAK_COLORPLUS_200", label: "Kodak ColorPlus 200", type: "COLOR" },
+  { value: "KODAK_EKTACHROME_100", label: "Kodak Ektachrome 100", type: "COLOR" },
+  { value: "KODAK_PORTRA_160", label: "Kodak Portra 160", type: "COLOR" },
+  { value: "KODACOLOR_100", label: "Kodak Color 100", type: "COLOR" },
+  { value: "KODACOLOR_200", label: "Kodak Color 200", type: "COLOR" },
+  { value: "KODAK_PRO_IMAGE_100", label: "Kodak Pro Image 100", type: "COLOR" },
+  { value: "FUJIFILM_FUJICOLOR_200", label: "Fujifilm Fujicolor 200", type: "COLOR" },
+  { value: "CINESTILL_800T", label: "CineStill 800T", type: "COLOR" },
+  { value: "ILFORD_DELTA_100", label: "Ilford Delta 100", type: "BLACK_AND_WHITE" },
+  { value: "ILFORD_DELTA_400", label: "Ilford Delta 400", type: "BLACK_AND_WHITE" },
+  { value: "ILFORD_DELTA_3200", label: "Ilford Delta 3200", type: "BLACK_AND_WHITE" },
+  { value: "ILFORD_FP4_125", label: "Ilford FP4 125", type: "BLACK_AND_WHITE" },
+  { value: "ILFORD_HP5_400", label: "Ilford HP5 400", type: "BLACK_AND_WHITE" },
+  { value: "ILFORD_XP2_400", label: "Ilford XP2 400", type: "BLACK_AND_WHITE" },
+  { value: "KODAK_TRI-X_400", label: "Kodak Tri-X 400", type: "BLACK_AND_WHITE" },
+  { value: "KODAK_T-MAX_400", label: "Kodak T-MAX 400", type: "BLACK_AND_WHITE" },
   { value: "OTHER", label: "Other", type: null },
 ] as const;

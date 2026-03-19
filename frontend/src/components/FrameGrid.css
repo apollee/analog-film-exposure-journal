@@ -1,6 +1,6 @@
 .frame-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 10px;
 }
 
@@ -11,6 +11,14 @@
   padding: 8px 10px;
   text-align: center;
   box-shadow: none;
+}
+
+.frame-tile.is-selectable {
+  cursor: pointer;
+}
+
+.frame-tile.is-selected {
+  border-color: var(--ink);
 }
 
 .frame-tile.review-underexposed {
@@ -79,27 +87,6 @@
   color: #2f6b4a;
 }
 
-.frame-review-actions {
-  margin-top: var(--space-xs);
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.review-btn {
-  border: 1px solid var(--border);
-  background: #f7f2ec;
-  color: var(--ink);
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-}
-
-.review-btn:hover {
-  transform: none;
-  box-shadow: none;
-}
 
 .empty-state {
   border: 1px dashed var(--border);

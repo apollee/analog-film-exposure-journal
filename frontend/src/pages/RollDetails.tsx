@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import FrameForm from "../components/FrameForm";
 import FrameList from "../components/FrameList";
 import FrameGrid from "../components/FrameGrid";
 import type { Frame } from "../types/frame";
 import type { Roll } from "../types/roll";
+import { FILM_STOCKS } from "../constants/filmStocks";
 import "../components/RollDetails.css";
 
 export default function RollDetailsPage() {
@@ -13,6 +14,8 @@ export default function RollDetailsPage() {
   const [roll, setRoll] = useState<Roll | null>(null);
   const [frames, setFrames] = useState<Frame[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reviewMode, setReviewMode] = useState(false);
+  const [selectedFrameId, setSelectedFrameId] = useState<string | null>(null);
 
   const userId = localStorage.getItem("userId") || "";
 
@@ -62,6 +65,11 @@ export default function RollDetailsPage() {
       prev.map((frame) => (frame.id === updated.id ? updated : frame))
     );
   };
+
+  const filmStockLabel = useMemo(() => {
+    if (!roll) return "";
+    return FILM_STOCKS.find((stock) => stock.value === roll.filmStock)?.label ?? roll.filmStock;
+  }, [roll]);
 
   useEffect(() => {
     if (!rollId) return;
@@ -122,6 +130,18 @@ export default function RollDetailsPage() {
     return <p>Roll not found.</p>;
   }
 
+  useEffect(() => {
+    if (!reviewMode || frames.length === 0) return;
+    if (!selectedFrameId) {
+      setSelectedFrameId(frames[0].id);
+    }
+  }, [reviewMode, frames, selectedFrameId]);
+
+  const selectedFrame = useMemo(
+    () => frames.find((frame) => frame.id === selectedFrameId) ?? null,
+    [frames, selectedFrameId]
+  );
+
   return (
     <section className="roll-detail">
       <header className="roll-detail-header">
@@ -131,7 +151,7 @@ export default function RollDetailsPage() {
         <div className="roll-detail-title">
           <h1>{roll.name}</h1>
           <p className="roll-meta-line">
-            {roll.filmStock} / ISO {roll.iso}
+            {filmStockLabel} / ISO {roll.iso}
           </p>
         </div>
         <div className="roll-detail-actions">
@@ -154,8 +174,75 @@ export default function RollDetailsPage() {
 
       {roll.status === "DEVELOPED" ? (
         <section className="roll-review">
-          <div className="section-title">Review Exposures</div>
-          <FrameGrid frames={frames} onReviewChange={handleReviewChange} rollIso={roll.iso} />
+          <div className="review-header">
+            <button
+              type="button"
+              className="review-toggle"
+              onClick={() => {
+                setReviewMode((prev) => !prev);
+                if (reviewMode) {
+                  setSelectedFrameId(null);
+                }
+              }}
+            >
+              <span className="review-eye" aria-hidden />
+              [ Review Exposures ]
+            </button>
+          </div>
+          <FrameGrid
+            frames={frames}
+            rollIso={roll.iso}
+            onSelectFrame={reviewMode ? setSelectedFrameId : undefined}
+            selectedFrameId={reviewMode ? selectedFrameId : null}
+          />
+          {reviewMode && selectedFrame && (
+            <div className="review-panel">
+              <div className="review-panel-header">
+                <div className="review-panel-title">Frame #{selectedFrame.frameNumber}</div>
+                <button
+                  type="button"
+                  className="review-panel-close"
+                  onClick={() => {
+                    setReviewMode(false);
+                    setSelectedFrameId(null);
+                  }}
+                >
+                  [ Close ]
+                </button>
+              </div>
+              <div className="review-panel-meta">
+                <span className="frame-pill">ISO {roll.iso}</span>
+                <span className="frame-pill">f/{selectedFrame.settings.aperture}</span>
+                <span className="frame-pill">{selectedFrame.settings.shutterSpeed}</span>
+                {selectedFrame.note && (
+                  <span className="frame-note">{selectedFrame.note}</span>
+                )}
+              </div>
+              <div className="review-panel-actions">
+                <button
+                  type="button"
+                  className="review-action"
+                  onClick={() => handleReviewChange(selectedFrame.id, "underexposed")}
+                >
+                  Under
+                </button>
+                <button
+                  type="button"
+                  className="review-action"
+                  onClick={() => handleReviewChange(selectedFrame.id, "well-exposed")}
+                >
+                  Good
+                </button>
+                <button
+                  type="button"
+                  className="review-action"
+                  onClick={() => handleReviewChange(selectedFrame.id, "overexposed")}
+                >
+                  Over
+                </button>
+              </div>
+            </div>
+          )}
         </section>
       ) : (
         <section className="roll-shooting">
