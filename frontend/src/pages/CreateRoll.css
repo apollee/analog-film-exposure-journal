@@ -1,0 +1,75 @@
+.create-roll-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.create-roll-card {
+  position: relative;
+  width: min(560px, 92vw);
+  background: var(--card);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.create-roll-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0;
+  border-radius: 0;
+  color: var(--ink);
+  box-shadow: none;
+  transform: none;
+}
+
+.create-roll-close:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+.create-roll-sub {
+  color: var(--ink-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.create-roll-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.create-roll-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.create-roll-error {
+  color: #a0432c;
+  margin-top: var(--space-sm);
+}
+
+.create-roll-submit {
+  margin-top: var(--space-lg);
+  width: 100%;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #7f7770;
+  border-color: #7f7770;
+  color: #f6f1ea;
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+}

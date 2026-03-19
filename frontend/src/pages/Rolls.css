@@ -43,6 +43,12 @@
   flex: 0 0 auto;
 }
 
+.rolls-page .primary-btn {
+  background: #1f1b18;
+  border-color: #1f1b18;
+  color: #f6f1ea;
+}
+
 .rolls-tabs {
   display: inline-flex;
   border: 1px solid var(--border);

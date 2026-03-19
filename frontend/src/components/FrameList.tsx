@@ -3,9 +3,10 @@ import type { Frame } from "../types/frame";
 
 interface FrameListProps {
   frames: Frame[];
+  rollIso?: number;
 }
 
-export default function FrameList({ frames }: FrameListProps) {
+export default function FrameList({ frames, rollIso }: FrameListProps) {
   if (frames.length === 0) {
     return (
       <div className="empty-state">
@@ -20,14 +21,16 @@ export default function FrameList({ frames }: FrameListProps) {
     <div className="frame-list">
       {frames.map((frame) => (
         <div key={frame.id} className="frame-card">
-          <div className="frame-card-top">
-            <strong>Frame {frame.frameNumber}</strong>
+          <div className="frame-card-row">
+            <div className="frame-card-number">{frame.frameNumber}</div>
+            <div className="frame-card-divider" />
+            <div className="frame-card-info">
+              <span className="frame-pill">ISO {rollIso ?? "-"}</span>
+              <span className="frame-pill">f/{frame.settings.aperture}</span>
+              <span className="frame-pill">{frame.settings.shutterSpeed}</span>
+            </div>
           </div>
-          <div className="frame-card-meta">
-            <span>f/{frame.settings.aperture}</span>
-            <span>{frame.settings.shutterSpeed}</span>
-          </div>
-          {frame.note && <p className="frame-card-notes">{frame.note}</p>}
+          {frame.note && <div className="frame-card-note">"{frame.note}"</div>}
         </div>
       ))}
     </div>

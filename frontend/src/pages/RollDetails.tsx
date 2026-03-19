@@ -181,7 +181,7 @@ export default function RollDetailsPage() {
             }}
           />
 
-          <FrameList frames={frames} />
+          <FrameList frames={frames} rollIso={roll.iso} />
         </section>
       )}
     </section>

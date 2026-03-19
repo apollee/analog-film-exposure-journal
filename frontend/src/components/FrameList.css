@@ -4,36 +4,55 @@
 }
 
 .frame-card {
-  border: 1px solid var(--border);
+  border: 2px solid var(--border-strong);
   background: var(--card);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-md);
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
 }
 
-.frame-card-top {
+.frame-card-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-sm);
-}
-
-.frame-note {
-  color: var(--ink-faint);
-  font-size: 0.75rem;
-}
-
-.frame-card-meta {
-  display: flex;
   gap: var(--space-md);
+}
+
+.frame-card-number {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.frame-card-divider {
+  width: 2px;
+  height: 36px;
+  background: var(--accent-rose);
+}
+
+.frame-card-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.frame-pill {
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  background: #f7f2ec;
+}
+
+.frame-card-note {
+  margin-top: var(--space-sm);
   color: var(--ink-muted);
   font-size: 0.85rem;
-}
-
-.frame-card-notes {
-  margin-top: var(--space-sm);
-  color: var(--ink-faint);
-  font-size: 0.85rem;
+  font-style: italic;
 }
 
 .empty-state {

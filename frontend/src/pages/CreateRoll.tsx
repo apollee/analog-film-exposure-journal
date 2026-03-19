@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FILM_STOCKS } from "../constants/filmStocks";
 import { createRoll } from "../api/rolls.api";
 import { useNavigate } from "react-router-dom";
+import "./CreateRoll.css";
 
 export default function CreateRoll() {
   const [name, setName] = useState("");
@@ -55,60 +56,86 @@ export default function CreateRoll() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Roll name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-
-      <select
-        value={filmStock}
-        onChange={(e) => handleFilmStockChange(e.target.value)}
+    <div className="create-roll-page">
+      <form onSubmit={handleSubmit} className="create-roll-card">
+        <button
+          type="button"
+          className="create-roll-close"
+          onClick={() => navigate("/journal-rolls")}
+          aria-label="Close"
         >
-        <option value="">Select film stock</option>
+          x
+        </button>
+        <h1>New Film Roll</h1>
+        <p className="create-roll-sub">Start a new exposure log</p>
 
-        {FILM_STOCKS.map((stock) => (
-          <option key={stock.value} value={stock.value}>
-            {stock.label}
-          </option>
-        ))}
-      </select>
+        <div className="create-roll-fields">
+          <label>
+            Roll Name
+            <input
+              placeholder="e.g. Weekend in Porto"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
 
-      <input
-        type="number"
-        value={iso}
-        onChange={(e) => setIso(Number(e.target.value))}
-        required
-      />
+          <label>
+            Film Stock
+            <select
+              value={filmStock}
+              onChange={(e) => handleFilmStockChange(e.target.value)}
+            >
+              <option value="">Select film stock</option>
 
-      <textarea
-        placeholder="Notes (optional)"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-      />
+              {FILM_STOCKS.map((stock) => (
+                <option key={stock.value} value={stock.value}>
+                  {stock.label}
+                </option>
+              ))}
+            </select>
+          </label>
 
-      {filmStock === "OTHER" && (
-      <select
-        value={rollType}
-        onChange={(e) => setRollType(e.target.value as "COLOR" | "BLACK_AND_WHITE")}
-        >
-        <option value="">Select film type</option>
-        <option value="COLOR">Color</option>
-        <option value="BLACK_AND_WHITE">Black & White</option>
-      </select>
-      )}
+          <label>
+            ISO
+            <input
+              type="number"
+              value={iso}
+              onChange={(e) => setIso(Number(e.target.value))}
+              required
+            />
+          </label>
 
-      {error && (
-          <p style={{ color: "red" }}>{error}</p>
-        )}
+          <label>
+            Notes
+            <textarea
+              placeholder="Notes (optional)"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </label>
 
-      <button type="submit" disabled={loading}>
+          {filmStock === "OTHER" && (
+            <label>
+              Film Type
+              <select
+                value={rollType}
+                onChange={(e) => setRollType(e.target.value as "COLOR" | "BLACK_AND_WHITE")}
+              >
+                <option value="">Select film type</option>
+                <option value="COLOR">Color</option>
+                <option value="BLACK_AND_WHITE">Black & White</option>
+              </select>
+            </label>
+          )}
+        </div>
+
+        {error && <p className="create-roll-error">{error}</p>}
+
+        <button type="submit" disabled={loading} className="create-roll-submit">
           {loading ? "Creating..." : "Create Roll"}
         </button>
-
-    </form>
+      </form>
+    </div>
   );
 }
-
