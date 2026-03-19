@@ -122,14 +122,6 @@ export default function RollDetailsPage() {
     loadData();
   }, [rollId, userId]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!roll) {
-    return <p>Roll not found.</p>;
-  }
-
   useEffect(() => {
     if (!reviewMode || frames.length === 0) return;
     if (!selectedFrameId) {
@@ -141,6 +133,14 @@ export default function RollDetailsPage() {
     () => frames.find((frame) => frame.id === selectedFrameId) ?? null,
     [frames, selectedFrameId]
   );
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!roll) {
+    return <p>Roll not found.</p>;
+  }
 
   return (
     <section className="roll-detail">
