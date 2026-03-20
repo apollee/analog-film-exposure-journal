@@ -65,11 +65,11 @@ export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, roll
               <span>{frame.settings.aperture}</span>
             </div>
             <div className="frame-row">
-              <span className="frame-label">Shutter Speed</span>
+              <span className="frame-label">Shutter speed</span>
               <span>{frame.settings.shutterSpeed}</span>
             </div>
             {frame.note && (
-              <div className="frame-row">
+              <div className="frame-row frame-note-row">
                 <span className="frame-label">Note</span>
                 <span>{frame.note}</span>
               </div>

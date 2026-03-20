@@ -2,7 +2,7 @@
   display: block;
   padding: var(--space-md);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background: var(--card);
   color: inherit;
   box-shadow: var(--shadow-card);

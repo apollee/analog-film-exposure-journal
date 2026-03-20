@@ -74,6 +74,8 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--ink-muted);
+  font-size: 0.78rem;
+  font-style: italic;
 }
 
 .icon-link {

@@ -11,6 +11,9 @@
   padding: 8px 10px;
   text-align: center;
   box-shadow: none;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
 }
 
 .frame-tile.is-selectable {
@@ -58,17 +61,28 @@
 
 .frame-label {
   color: var(--ink-faint);
-  text-transform: uppercase;
+  text-transform: none;
   font-size: 0.7rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
 }
 
 .frame-row span:last-child {
   color: var(--ink);
 }
 
+.frame-note-row {
+  align-items: flex-start;
+}
+
+.frame-note-row span:last-child {
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+  flex: 1;
+}
+
 .frame-review {
-  margin-top: var(--space-xs);
+  margin-top: auto;
   font-size: 0.8rem;
   color: var(--ink);
   font-family: var(--font-display);

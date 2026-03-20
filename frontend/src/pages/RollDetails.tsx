@@ -158,17 +158,15 @@ export default function RollDetailsPage() {
           <span className={`status-pill ${roll.status.toLowerCase()}`}>
             {roll.status === "IN_PROGRESS" ? "SHOOTING" : "DEV"}
           </span>
-          <button
-            type="button"
-            className="ghost-btn"
-            onClick={() =>
-              updateRollStatus(
-                roll.status === "IN_PROGRESS" ? "DEVELOPED" : "IN_PROGRESS"
-              )
-            }
-          >
-            {roll.status === "IN_PROGRESS" ? "Mark as Developed" : "Mark as In Progress"}
-          </button>
+          {roll.status === "DEVELOPED" && (
+            <button
+              type="button"
+              className="ghost-btn"
+              onClick={() => updateRollStatus("IN_PROGRESS")}
+            >
+              Mark as In Progress
+            </button>
+          )}
         </div>
       </header>
 
@@ -246,27 +244,36 @@ export default function RollDetailsPage() {
         </section>
       ) : (
         <section className="roll-shooting">
-          <FrameForm
-            rollId={roll.id}
-            userId={userId}
-            onFrameCreated={() => {
-              if (!rollId) return;
-              const fetchFrames = async () => {
-                const res = await fetch(`/api/rolls/${rollId}/frames`, {
-                  headers: {
-                    "x-user-id": userId,
-                  },
-                });
-                if (!res.ok) {
-                  console.error("Failed to fetch frames");
-                  return;
-                }
-                const data = await res.json();
-                setFrames(data);
-              };
-              fetchFrames();
-            }}
-          />
+          <div className="shooting-actions">
+            <FrameForm
+              rollId={roll.id}
+              userId={userId}
+              onFrameCreated={() => {
+                if (!rollId) return;
+                const fetchFrames = async () => {
+                  const res = await fetch(`/api/rolls/${rollId}/frames`, {
+                    headers: {
+                      "x-user-id": userId,
+                    },
+                  });
+                  if (!res.ok) {
+                    console.error("Failed to fetch frames");
+                    return;
+                  }
+                  const data = await res.json();
+                  setFrames(data);
+                };
+                fetchFrames();
+              }}
+            />
+            <button
+              type="button"
+              className="ghost-btn"
+              onClick={() => updateRollStatus("DEVELOPED")}
+            >
+              Mark as Developed
+            </button>
+          </div>
 
           <FrameList frames={frames} rollIso={roll.iso} />
         </section>

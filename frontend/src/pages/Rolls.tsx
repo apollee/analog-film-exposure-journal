@@ -47,7 +47,10 @@ export default function Rolls() {
           <span className="rolls-accent" aria-hidden />
           <div>
             <h1>My Rolls</h1>
-            <p className="rolls-sub">{rolls.length} rolls in journal</p>
+            <p className="rolls-sub">
+              <span className="rolls-emoji" aria-hidden>🎞️</span>
+              {rolls.length} rolls in journal
+            </p>
           </div>
         </div>
         <Link className="primary-btn" to="/journal-rolls/new">
