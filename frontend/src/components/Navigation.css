@@ -71,10 +71,10 @@
   border-radius: 0;
   background: transparent;
   font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-transform: none;
+  letter-spacing: 0.2px;
   color: var(--ink-muted);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-style: italic;
 }
 

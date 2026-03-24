@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import "./FrameGrid.css";
 import type { Frame } from "../types/frame";
 
@@ -22,6 +23,24 @@ function exposureLabel(exposure: "underexposed" | "overexposed" | "well-exposed"
 }
 
 export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, rollIso }: FrameGridProps) {
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [minTileHeight, setMinTileHeight] = useState<number | null>(null);
+
+  useLayoutEffect(() => {
+    if (!gridRef.current) return;
+    const tiles = Array.from(gridRef.current.querySelectorAll<HTMLElement>(".frame-tile"));
+    if (tiles.length === 0) {
+      if (minTileHeight !== null) {
+        setMinTileHeight(null);
+      }
+      return;
+    }
+    const maxHeight = Math.max(...tiles.map((tile) => tile.getBoundingClientRect().height));
+    if (!Number.isFinite(maxHeight) || maxHeight <= 0) return;
+    if (minTileHeight && Math.abs(maxHeight - minTileHeight) < 1) return;
+    setMinTileHeight(maxHeight);
+  }, [frames, rollIso, selectedFrameId, minTileHeight]);
+
   if (frames.length === 0) {
     return (
       <div className="empty-state">
@@ -33,13 +52,14 @@ export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, roll
   }
 
   return (
-    <div className="frame-grid">
+    <div className="frame-grid" ref={gridRef}>
       {frames.map((frame) => {
         const isSelected = selectedFrameId === frame.id;
         return (
           <div
             key={frame.id}
             className={`frame-tile ${frame.review?.exposure ? `review-${frame.review.exposure}` : ""} ${onSelectFrame ? "is-selectable" : ""} ${isSelected ? "is-selected" : ""}`}
+            style={minTileHeight ? { minHeight: `${minTileHeight}px` } : undefined}
             role={onSelectFrame ? "button" : undefined}
             tabIndex={onSelectFrame ? 0 : undefined}
             onClick={onSelectFrame ? () => onSelectFrame(frame.id) : undefined}
@@ -57,7 +77,7 @@ export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, roll
           <div className="frame-tile-number">#{frame.frameNumber}</div>
           <div className="frame-tile-info">
             <div className="frame-row">
-              <span className="frame-label">ISO</span>
+              <span className="frame-label frame-label-iso">ISO</span>
               <span>{rollIso ?? "-"}</span>
             </div>
             <div className="frame-row">

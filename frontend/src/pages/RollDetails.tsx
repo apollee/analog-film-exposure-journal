@@ -161,7 +161,7 @@ export default function RollDetailsPage() {
           {roll.status === "DEVELOPED" && (
             <button
               type="button"
-              className="ghost-btn"
+              className="ghost-btn outline-btn"
               onClick={() => updateRollStatus("IN_PROGRESS")}
             >
               Mark as In Progress
@@ -185,6 +185,13 @@ export default function RollDetailsPage() {
             >
               <span className="review-eye" aria-hidden />
               [ Review Exposures ]
+            </button>
+            <button
+              type="button"
+              className="ghost-btn outline-btn"
+              onClick={() => updateRollStatus("IN_PROGRESS")}
+            >
+              Mark as In Progress
             </button>
           </div>
           <FrameGrid
@@ -222,6 +229,12 @@ export default function RollDetailsPage() {
                   className="review-action"
                   onClick={() => handleReviewChange(selectedFrame.id, "underexposed")}
                 >
+                  <span className="review-icon" aria-hidden>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                      <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4" stroke="currentColor" strokeWidth="1.4" />
+                    </svg>
+                  </span>
                   Under
                 </button>
                 <button
@@ -229,6 +242,12 @@ export default function RollDetailsPage() {
                   className="review-action"
                   onClick={() => handleReviewChange(selectedFrame.id, "well-exposed")}
                 >
+                  <span className="review-icon" aria-hidden>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                      <path d="M8.5 12.5l2.2 2.2 4.8-4.8" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                    </svg>
+                  </span>
                   Good
                 </button>
                 <button
@@ -236,6 +255,12 @@ export default function RollDetailsPage() {
                   className="review-action"
                   onClick={() => handleReviewChange(selectedFrame.id, "overexposed")}
                 >
+                  <span className="review-icon" aria-hidden>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="currentColor" strokeWidth="1.4" />
+                    </svg>
+                  </span>
                   Over
                 </button>
               </div>
@@ -268,7 +293,7 @@ export default function RollDetailsPage() {
             />
             <button
               type="button"
-              className="ghost-btn"
+              className="ghost-btn outline-btn"
               onClick={() => updateRollStatus("DEVELOPED")}
             >
               Mark as Developed

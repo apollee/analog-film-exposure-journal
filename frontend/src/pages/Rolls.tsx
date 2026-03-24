@@ -48,7 +48,18 @@ export default function Rolls() {
           <div>
             <h1>My Rolls</h1>
             <p className="rolls-sub">
-              <span className="rolls-emoji" aria-hidden>🎞️</span>
+              <span className="rolls-emoji" aria-hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="16" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                  <rect x="7" y="8" width="10" height="8" fill="none" stroke="currentColor" strokeWidth="1.2" />
+                  <circle cx="6" cy="7" r="1" fill="currentColor" />
+                  <circle cx="6" cy="12" r="1" fill="currentColor" />
+                  <circle cx="6" cy="17" r="1" fill="currentColor" />
+                  <circle cx="18" cy="7" r="1" fill="currentColor" />
+                  <circle cx="18" cy="12" r="1" fill="currentColor" />
+                  <circle cx="18" cy="17" r="1" fill="currentColor" />
+                </svg>
+              </span>
               {rolls.length} rolls in journal
             </p>
           </div>
