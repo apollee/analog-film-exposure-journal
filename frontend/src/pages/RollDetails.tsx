@@ -187,6 +187,13 @@ export default function RollDetailsPage() {
               <span className="review-eye" aria-hidden />
               [ Review Exposures ]
             </button>
+            <button
+              type="button"
+              className="ghost-btn outline-btn"
+              onClick={() => updateRollStatus("IN_PROGRESS")}
+            >
+              Mark as In Progress
+            </button>
           </div>
           <FrameGrid
             frames={frames}
