@@ -70,7 +70,7 @@
   border: none;
   border-radius: 0;
   background: transparent;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   text-transform: none;
   letter-spacing: 0.2px;
   color: var(--ink-muted);

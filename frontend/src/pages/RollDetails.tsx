@@ -16,6 +16,10 @@ export default function RollDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [reviewMode, setReviewMode] = useState(false);
   const [selectedFrameId, setSelectedFrameId] = useState<string | null>(null);
+  const [lastReviewAction, setLastReviewAction] = useState<{
+    frameId: string;
+    exposure: "underexposed" | "overexposed" | "well-exposed";
+  } | null>(null);
 
   const userId = localStorage.getItem("userId") || "";
 
@@ -45,6 +49,12 @@ export default function RollDetailsPage() {
     exposure: "underexposed" | "overexposed" | "well-exposed"
   ) => {
     if (!rollId) return;
+    setLastReviewAction({ frameId, exposure });
+    setTimeout(() => {
+      setLastReviewAction((prev) =>
+        prev && prev.frameId === frameId && prev.exposure === exposure ? null : prev
+      );
+    }, 500);
 
     const res = await fetch(`/api/rolls/${rollId}/frames/${frameId}/review`, {
       method: "PATCH",
@@ -158,15 +168,6 @@ export default function RollDetailsPage() {
           <span className={`status-pill ${roll.status.toLowerCase()}`}>
             {roll.status === "IN_PROGRESS" ? "SHOOTING" : "DEV"}
           </span>
-          {roll.status === "DEVELOPED" && (
-            <button
-              type="button"
-              className="ghost-btn outline-btn"
-              onClick={() => updateRollStatus("IN_PROGRESS")}
-            >
-              Mark as In Progress
-            </button>
-          )}
         </div>
       </header>
 
@@ -185,13 +186,6 @@ export default function RollDetailsPage() {
             >
               <span className="review-eye" aria-hidden />
               [ Review Exposures ]
-            </button>
-            <button
-              type="button"
-              className="ghost-btn outline-btn"
-              onClick={() => updateRollStatus("IN_PROGRESS")}
-            >
-              Mark as In Progress
             </button>
           </div>
           <FrameGrid
@@ -226,7 +220,12 @@ export default function RollDetailsPage() {
               <div className="review-panel-actions">
                 <button
                   type="button"
-                  className="review-action"
+                  className={`review-action is-under ${
+                    lastReviewAction?.frameId === selectedFrame.id &&
+                    lastReviewAction?.exposure === "underexposed"
+                      ? "is-active"
+                      : ""
+                  } ${selectedFrame.review?.exposure === "underexposed" ? "is-active" : ""}`}
                   onClick={() => handleReviewChange(selectedFrame.id, "underexposed")}
                 >
                   <span className="review-icon" aria-hidden>
@@ -239,7 +238,12 @@ export default function RollDetailsPage() {
                 </button>
                 <button
                   type="button"
-                  className="review-action"
+                  className={`review-action is-good ${
+                    lastReviewAction?.frameId === selectedFrame.id &&
+                    lastReviewAction?.exposure === "well-exposed"
+                      ? "is-active"
+                      : ""
+                  } ${selectedFrame.review?.exposure === "well-exposed" ? "is-active" : ""}`}
                   onClick={() => handleReviewChange(selectedFrame.id, "well-exposed")}
                 >
                   <span className="review-icon" aria-hidden>
@@ -252,7 +256,12 @@ export default function RollDetailsPage() {
                 </button>
                 <button
                   type="button"
-                  className="review-action"
+                  className={`review-action is-over ${
+                    lastReviewAction?.frameId === selectedFrame.id &&
+                    lastReviewAction?.exposure === "overexposed"
+                      ? "is-active"
+                      : ""
+                  } ${selectedFrame.review?.exposure === "overexposed" ? "is-active" : ""}`}
                   onClick={() => handleReviewChange(selectedFrame.id, "overexposed")}
                 >
                   <span className="review-icon" aria-hidden>
@@ -293,7 +302,7 @@ export default function RollDetailsPage() {
             />
             <button
               type="button"
-              className="ghost-btn outline-btn"
+              className="ghost-btn outline-btn outline-btn-success"
               onClick={() => updateRollStatus("DEVELOPED")}
             >
               Mark as Developed

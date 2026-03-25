@@ -76,6 +76,11 @@
   letter-spacing: 1px;
 }
 
+.outline-btn-success {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
 .section-title {
   font-family: var(--font-display);
   font-size: 1rem;
@@ -216,6 +221,26 @@
 .review-action:hover {
   transform: none;
   box-shadow: none;
+}
+
+.review-action.is-active {
+  border-color: var(--ink);
+  background: #efe8dd;
+}
+
+.review-action.is-active.is-under {
+  border-color: #8aa1d8;
+  background: #f2f5ff;
+}
+
+.review-action.is-active.is-good {
+  border-color: #7eb599;
+  background: #f1f7f3;
+}
+
+.review-action.is-active.is-over {
+  border-color: #d7a3a0;
+  background: #fff3ee;
 }
 
 .review-action .review-icon {

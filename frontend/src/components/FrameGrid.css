@@ -1,7 +1,8 @@
 .frame-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  align-items: stretch;
 }
 
 .frame-tile {
@@ -13,6 +14,8 @@
   box-shadow: none;
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
+  box-sizing: border-box;
 }
 
 .frame-tile.is-selectable {
@@ -80,6 +83,8 @@
 
 .frame-note-row span:last-child {
   text-align: right;
+  margin-left: auto;
+  max-width: 60%;
   white-space: normal;
   word-break: break-word;
   flex: 1;
