@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import FrameForm from "../components/FrameForm";
 import FrameList from "../components/FrameList";
 import FrameGrid from "../components/FrameGrid";
 import type { Frame } from "../types/frame";
 import type { Roll } from "../types/roll";
 import { FILM_STOCKS } from "../constants/filmStocks";
+import { deleteRoll as deleteRollApi } from "../api/rolls.api";
 import "../components/RollDetails.css";
 
 export default function RollDetailsPage() {
@@ -20,6 +21,8 @@ export default function RollDetailsPage() {
     frameId: string;
     exposure: "underexposed" | "overexposed" | "well-exposed";
   } | null>(null);
+
+  const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId") || "";
 
@@ -74,6 +77,18 @@ export default function RollDetailsPage() {
     setFrames((prev) =>
       prev.map((frame) => (frame.id === updated.id ? updated : frame))
     );
+  };
+
+  const handleDeleteRoll = async () => {
+    if (!rollId) return;
+    const confirmed = window.confirm("Delete this roll? This cannot be undone.");
+    if (!confirmed) return;
+    try {
+      await deleteRollApi(rollId);
+      navigate("/journal-rolls");
+    } catch (error) {
+      console.error("Failed to delete roll", error);
+    }
   };
 
   const filmStockLabel = useMemo(() => {
@@ -168,6 +183,9 @@ export default function RollDetailsPage() {
           <span className={`status-pill ${roll.status.toLowerCase()}`}>
             {roll.status === "IN_PROGRESS" ? "SHOOTING" : "DEV"}
           </span>
+          <button type="button" className="ghost-btn" onClick={handleDeleteRoll}>
+            Delete Roll
+          </button>
         </div>
       </header>
 

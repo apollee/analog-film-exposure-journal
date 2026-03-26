@@ -1,5 +1,5 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { getRollsByUser, getRollById, createRoll, updateRoll } from "../services/rolls.service";
+import { getRollsByUser, getRollById, createRoll, updateRoll, deleteRoll } from "../services/rolls.service";
 import { RollSchema } from "../schemas/roll.schema";
 import { getUserFromHeader } from "../utils/auth";
 import { getCorrelationContext, logError, logInfo, logWarn, withCorrelationHeader } from "../utils/logging";
@@ -160,6 +160,47 @@ export async function updateRollStatusHandler(req, context) {
   }
 }
 
+export async function deleteRollHandler(req, context) {
+  const logContext = getCorrelationContext(req);
+  logInfo(context, req, logContext, "rolls.delete.request");
+
+  const user = getUserFromHeader(req);
+  if (!user) {
+    return {
+      status: 401,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "No user authenticated" },
+    };
+  }
+
+  const rollId = req.params.id;
+  if (!rollId) {
+    return {
+      status: 400,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "rollId is required" },
+    };
+  }
+
+  try {
+    await deleteRoll(rollId, user.userId);
+    return {
+      status: 204,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+    };
+  } catch (error) {
+    logError(context, req, logContext, "rolls.delete.error", error, {
+      rollId,
+      userId: user.userId,
+    });
+    return {
+      status: 500,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: "Failed to delete roll" },
+    };
+  }
+}
+
 app.http("rollsHandler", {
   methods: ["GET", "POST"],
   route: "rolls",
@@ -175,13 +216,15 @@ app.http("rollsHandler", {
 });
 
 app.http("rollByIdHandler", {
-  methods: ["GET", "PATCH"],
+  methods: ["GET", "PATCH", "DELETE"],
   route: "rolls/{id}",
   handler: async (req, context) => {
     if (req.method === "GET") {
       return getRollByIdHandler(req, context);
     } else if (req.method === "PATCH") {
       return updateRollStatusHandler(req, context);
+    } else if (req.method === "DELETE") {
+      return deleteRollHandler(req, context);
     } else {
       return { status: 405 };
     }

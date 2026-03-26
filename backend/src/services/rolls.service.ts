@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { getRollsContainer } from "../library/cosmos";
+import { getFramesContainer, getRollsContainer } from "../library/cosmos";
 
 export async function createRoll(userId: string, data: any) {
   const container = await getRollsContainer();
@@ -49,9 +49,19 @@ export async function getRollById(id: string, userId: string) {
 }
 
 export async function deleteRoll(id: string, userId: string) {
-  const container = await getRollsContainer();
+  const rollsContainer = await getRollsContainer();
+  const framesContainer = await getFramesContainer();
 
-  await container.item(id, userId).delete();
+  // Delete all frames for this roll first (partition key is rollId).
+  const { resources: frames } = await framesContainer.items
+    .query("SELECT c.id FROM c", { partitionKey: id })
+    .fetchAll();
+
+  for (const frame of frames) {
+    await framesContainer.item(frame.id, id).delete();
+  }
+
+  await rollsContainer.item(id, userId).delete();
 }
 
 export async function updateRoll(id: string, userId: string, updates: any) {

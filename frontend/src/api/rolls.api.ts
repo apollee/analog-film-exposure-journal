@@ -43,3 +43,13 @@ export async function createRoll(payload: {
   return data;
 
 }
+
+export async function deleteRoll(rollId: string): Promise<void> {
+  const response = await fetch(`/api/rolls/${rollId}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete roll");
+  }
+}
