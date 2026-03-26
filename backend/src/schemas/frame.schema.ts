@@ -28,7 +28,7 @@ const ApertureSchema = z
   });
 
 const ShutterSpeedSchema = z.enum(ShutterSpeedValues, {
-  errorMap: () => ({ message: "Invalid shutter speed value" })
+  message: "Invalid shutter speed value",
 });
 
 export const FrameCreateSchema = z.object({
