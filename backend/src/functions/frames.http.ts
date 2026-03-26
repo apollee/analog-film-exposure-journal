@@ -1,6 +1,7 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { getUserFromHeader } from "../utils/auth";
 import { getFramesByRoll, createFrame, updateFrameReview } from "../services/frames.service";
+import { FrameCreateSchema } from "../schemas/frame.schema";
 import { getCorrelationContext, logError, logInfo, logWarn, withCorrelationHeader } from "../utils/logging";
 
 export async function framesHandler(
@@ -44,8 +45,16 @@ export async function framesHandler(
 
     if (req.method === "POST") {
       const body = await req.json();
+      const parsed = FrameCreateSchema.safeParse(body);
+      if (!parsed.success) {
+        return {
+          status: 400,
+          headers: withCorrelationHeader(undefined, logContext.correlationId),
+          jsonBody: { message: parsed.error.issues.map((issue) => issue.message).join(", ") },
+        };
+      }
 
-      const frame = await createFrame(user.userId, rollId, body);
+      const frame = await createFrame(user.userId, rollId, parsed.data);
 
       return {
         status: 201,

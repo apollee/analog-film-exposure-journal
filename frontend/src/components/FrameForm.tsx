@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { APERTURE_VALUES, SHUTTER_SPEED_VALUES } from "../constants/exposureValues";
 import "./FrameForm.css";
 
 interface FrameFormProps {
@@ -16,6 +17,7 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!aperture || !shutterSpeed) return;
     setLoading(true);
 
     await fetch(`/api/rolls/${rollId}/frames`, {
@@ -64,24 +66,34 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
             <form onSubmit={handleSubmit} className="modal-form">
               <label>
                 Aperture
-                <input
-                  type="number"
-                  placeholder="2.8"
+                <select
                   value={aperture}
                   onChange={(e) => setAperture(e.target.value)}
                   required
-                />
+                >
+                  <option value="">Select</option>
+                  {APERTURE_VALUES.map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
               </label>
 
               <label>
                 Shutter Speed
-                <input
-                  type="text"
-                  placeholder="1/250"
+                <select
                   value={shutterSpeed}
                   onChange={(e) => setShutterSpeed(e.target.value)}
                   required
-                />
+                >
+                  <option value="">Select</option>
+                  {SHUTTER_SPEED_VALUES.map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
               </label>
 
               <label>

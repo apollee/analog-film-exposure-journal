@@ -1,5 +1,6 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { getRollsByUser, getRollById, createRoll, updateRoll } from "../services/rolls.service";
+import { RollSchema } from "../schemas/roll.schema";
 import { getUserFromHeader } from "../utils/auth";
 import { getCorrelationContext, logError, logInfo, logWarn, withCorrelationHeader } from "../utils/logging";
 
@@ -45,9 +46,17 @@ export async function createRollHandler(req, context) {
   }
 
   const body = await req.json();
+  const parsed = RollSchema.safeParse(body);
+  if (!parsed.success) {
+    return {
+      status: 400,
+      headers: withCorrelationHeader(undefined, logContext.correlationId),
+      jsonBody: { message: parsed.error.issues.map((issue) => issue.message).join(", ") },
+    };
+  }
 
   try {
-    const savedRoll = await createRoll(user.userId, body);
+    const savedRoll = await createRoll(user.userId, parsed.data);
 
     return {
       status: 201,
@@ -178,4 +187,3 @@ app.http("rollByIdHandler", {
     }
   },
 });
-

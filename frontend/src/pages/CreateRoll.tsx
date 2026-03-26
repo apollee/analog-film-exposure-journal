@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FILM_STOCKS } from "../constants/filmStocks";
+import { ISO_VALUES } from "../constants/exposureValues";
 import { createRoll } from "../api/rolls.api";
 import { useNavigate } from "react-router-dom";
 import "./CreateRoll.css";
@@ -85,6 +86,7 @@ export default function CreateRoll() {
             <select
               value={filmStock}
               onChange={(e) => handleFilmStockChange(e.target.value)}
+              required
             >
               <option value="">Select film stock</option>
 
@@ -98,12 +100,17 @@ export default function CreateRoll() {
 
           <label>
             ISO
-            <input
-              type="number"
+            <select
               value={iso}
               onChange={(e) => setIso(Number(e.target.value))}
               required
-            />
+            >
+              {ISO_VALUES.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label>
@@ -121,6 +128,7 @@ export default function CreateRoll() {
               <select
                 value={rollType}
                 onChange={(e) => setRollType(e.target.value as "COLOR" | "BLACK_AND_WHITE")}
+                required
               >
                 <option value="">Select film type</option>
                 <option value="COLOR">Color</option>

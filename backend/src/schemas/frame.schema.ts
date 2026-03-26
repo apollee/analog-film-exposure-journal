@@ -1,24 +1,40 @@
 import { z } from "zod";
 
-// Shutter speed can be a number or a fraction string
-const ShutterSpeedSchema = z.union([
-  z.number().positive(), // ex 1s, 0.5s, etc
-  z.string().regex(/^1\/\d+$/, "Shutter speed must be in the following format, ex: 1/250")
-]);
+export const ApertureValues = [
+  1.4, 1.8, 2, 2.8, 4, 5.6, 8, 11, 16, 22
+] as const;
 
-export const FrameSchema = z.object({
-  id: z.string().uuid().optional(), 
+export const ShutterSpeedValues = [
+  "B",
+  "1s",
+  "1/2",
+  "1/4",
+  "1/8",
+  "1/15",
+  "1/30",
+  "1/60",
+  "1/125",
+  "1/250",
+  "1/500",
+  "1/1000",
+  "1/2000",
+  "1/4000"
+] as const;
 
-  rollId: z.string().uuid(), 
+const ApertureSchema = z
+  .number()
+  .refine((val) => ApertureValues.includes(val as (typeof ApertureValues)[number]), {
+    message: "Invalid aperture value",
+  });
 
-  frameNumber: z.number().int().min(1), 
+const ShutterSpeedSchema = z.enum(ShutterSpeedValues, {
+  errorMap: () => ({ message: "Invalid shutter speed value" })
+});
 
-  aperture: z.number().positive().refine(
-    (val) => val >= 0.7 && val <= 64,
-    "Aperture must be between f/0.7 and f/64"
-  ),
-
-  shutterSpeed: ShutterSpeedSchema,
-
-  notes: z.string().nullable().optional(),
+export const FrameCreateSchema = z.object({
+  settings: z.object({
+    aperture: ApertureSchema,
+    shutterSpeed: ShutterSpeedSchema,
+  }),
+  note: z.string().optional().nullable(),
 });
