@@ -25,6 +25,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  background: transparent;
 }
 
 .home-mark-icon {
@@ -47,12 +49,7 @@
 }
 
 .home-card-accent {
-  position: absolute;
-  left: 16px;
-  top: 24px;
-  width: 2px;
-  height: 32px;
-  background: var(--accent-rose);
+  display: none;
 }
 
 .home-card h2 {
