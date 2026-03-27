@@ -45,7 +45,7 @@ export default function Home() {
       </section>
 
       <p className="home-quote">
-        “The camera is an instrument that teaches people how to see without a camera.” — Dorothea Lange
+        “There is no such thing as inaccuracy in a photograph. All photographs are accurate. None of them is the truth...” — Richard Avedon
       </p>
     </main>
   );
