@@ -28,22 +28,9 @@
 }
 
 .home-mark-icon {
-  width: 22px;
-  height: 16px;
-  border: 2px solid var(--ink);
-  border-radius: 4px;
-  position: relative;
-}
-
-.home-mark-icon::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 6px;
+  width: 26px;
+  height: 26px;
+  color: var(--ink);
 }
 
 .home-card {

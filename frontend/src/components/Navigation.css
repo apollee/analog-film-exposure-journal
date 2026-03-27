@@ -26,12 +26,9 @@
   position: relative;
 }
 
-.brand-mark::after {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
+.brand-mark svg {
+  width: 20px;
+  height: 20px;
 }
 
 .brand-title {

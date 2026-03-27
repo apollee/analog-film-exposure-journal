@@ -39,6 +39,7 @@
 .rolls-emoji svg {
   width: 18px;
   height: 18px;
+  display: block;
 }
 
 .primary-btn {

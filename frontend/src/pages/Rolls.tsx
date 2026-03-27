@@ -49,15 +49,8 @@ export default function Rolls() {
             <h1>My Rolls</h1>
             <p className="rolls-sub">
               <span className="rolls-emoji" aria-hidden>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3" y="4" width="18" height="16" rx="2" ry="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="7" y="8" width="10" height="8" fill="none" stroke="currentColor" strokeWidth="1.2" />
-                  <circle cx="6" cy="7" r="1" fill="currentColor" />
-                  <circle cx="6" cy="12" r="1" fill="currentColor" />
-                  <circle cx="6" cy="17" r="1" fill="currentColor" />
-                  <circle cx="18" cy="7" r="1" fill="currentColor" />
-                  <circle cx="18" cy="12" r="1" fill="currentColor" />
-                  <circle cx="18" cy="17" r="1" fill="currentColor" />
+                <svg viewBox="0 0 82.235 82.235" aria-hidden="true">
+                  <path d="M41.676,19.922v43.24h40.559v-43.24H41.676z M55.164,60.076h-8.568v-4.495h8.568V60.076z M55.164,27.498h-8.568v-4.491h8.568V27.498z M66.91,60.076h-8.571v-4.495h8.571V60.076z M66.91,27.498h-8.571v-4.491h8.571V27.498z M78.656,60.076h-8.571v-4.495h8.571V60.076z M78.656,27.498h-8.571v-4.491h8.571V27.498z M39.249,17.495h3.697V9.267H26.841V6.669H16.105v2.598H0v8.228h3.697v47.692H0v8.228h16.105v2.151h10.737v-2.151h16.105v-8.228h-3.697V17.495z M35.67,65.194H7.276V17.688H35.67V65.194z M14.573,28.472h-4.252v-8.378h4.252V28.472z M14.573,39.774h-4.252v-8.378h4.252V39.774z M14.573,51.072h-4.252V42.69h4.252V51.072z M14.573,62.37h-4.252v-8.378h4.252V62.37z" fill="currentColor" />
                 </svg>
               </span>
               {rolls.length} rolls in journal

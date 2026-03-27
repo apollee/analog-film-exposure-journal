@@ -124,23 +124,9 @@
   box-shadow: var(--shadow-card);
 }
 
-.review-eye {
+.review-eye-icon {
   width: 18px;
-  height: 12px;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  position: relative;
-}
-
-.review-eye::after {
-  content: "";
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  top: 2px;
-  left: 6px;
+  height: 18px;
 }
 
 .review-panel {
