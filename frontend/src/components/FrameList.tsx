@@ -28,6 +28,9 @@ export default function FrameList({ frames, rollIso }: FrameListProps) {
               <span className="frame-pill">ISO {rollIso ?? "-"}</span>
               <span className="frame-pill">f/{frame.settings.aperture}</span>
               <span className="frame-pill">{frame.settings.shutterSpeed}</span>
+              <span className="frame-pill">
+                {frame.settings.flashUsed ? "Flash" : "No Flash"}
+              </span>
             </div>
           </div>
           {frame.note && <div className="frame-card-note">"{frame.note}"</div>}

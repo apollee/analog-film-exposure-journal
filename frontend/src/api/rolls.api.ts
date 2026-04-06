@@ -20,6 +20,7 @@ export async function createRoll(payload: {
   name: string;
   filmStock: string;
   iso: number;
+  cameraUsed?: string;
   notes?: string;
   rollType: "COLOR" | "BLACK_AND_WHITE" | "";
   status: "IN_PROGRESS" | "DEVELOPED";

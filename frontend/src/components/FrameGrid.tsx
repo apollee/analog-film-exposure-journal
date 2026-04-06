@@ -108,6 +108,10 @@ export default function FrameGrid({ frames, onSelectFrame, selectedFrameId, roll
               <span className="frame-label">Shutter speed</span>
               <span>{frame.settings.shutterSpeed}</span>
             </div>
+            <div className="frame-row">
+              <span className="frame-label">Flash</span>
+              <span>{frame.settings.flashUsed ? "Yes" : "No"}</span>
+            </div>
             {frame.note && (
               <div className="frame-row frame-note-row">
                 <span className="frame-label">Note</span>

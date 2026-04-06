@@ -10,6 +10,7 @@ export default function CreateRoll() {
   const [filmStock, setFilmStock] = useState("");
   const [rollType, setRollType] = useState<"COLOR" | "BLACK_AND_WHITE" | "">("");
   const [iso, setIso] = useState(400);
+  const [cameraUsed, setCameraUsed] = useState("");
   const [notes, setNotes] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,7 @@ export default function CreateRoll() {
         name,
         filmStock,
         iso,
+        cameraUsed: cameraUsed.trim() || undefined,
         notes,
         rollType,
         status: "IN_PROGRESS"
@@ -111,6 +113,15 @@ export default function CreateRoll() {
                 </option>
               ))}
             </select>
+          </label>
+
+          <label>
+            Camera Used
+            <input
+              placeholder="e.g. Canon AE-1"
+              value={cameraUsed}
+              onChange={(e) => setCameraUsed(e.target.value)}
+            />
           </label>
 
           <label>

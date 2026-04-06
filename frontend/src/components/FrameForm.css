@@ -94,3 +94,14 @@
   color: var(--ink);
   font-weight: 400;
 }
+
+.checkbox-field {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: auto;
+}

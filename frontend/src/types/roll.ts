@@ -6,6 +6,7 @@ export type Roll = {
   name: string;
   filmStock: string;
   iso: number;
+  cameraUsed?: string;
   notes: string;
   status: RollStatus;
   rollColor: RollColor;

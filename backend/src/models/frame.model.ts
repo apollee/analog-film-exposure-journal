@@ -4,5 +4,6 @@ export type Frame = {
   frameNumber: number;
   aperture: number;
   shutterSpeed: string;
+  flashUsed?: boolean;
   notes: string;
 };

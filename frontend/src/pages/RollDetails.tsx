@@ -177,6 +177,7 @@ export default function RollDetailsPage() {
           <h1>{roll.name}</h1>
           <p className="roll-meta-line">
             {filmStockLabel} • ISO {roll.iso}
+            {roll.cameraUsed ? ` • ${roll.cameraUsed}` : ""}
           </p>
         </div>
         <div className="roll-detail-actions">
@@ -241,6 +242,9 @@ export default function RollDetailsPage() {
                 <span className="frame-pill">ISO {roll.iso}</span>
                 <span className="frame-pill">f/{selectedFrame.settings.aperture}</span>
                 <span className="frame-pill">{selectedFrame.settings.shutterSpeed}</span>
+                <span className="frame-pill">
+                  {selectedFrame.settings.flashUsed ? "Flash" : "No Flash"}
+                </span>
                 {selectedFrame.note && (
                   <span className="frame-note">{selectedFrame.note}</span>
                 )}

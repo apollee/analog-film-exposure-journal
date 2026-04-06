@@ -48,6 +48,8 @@ export const RollSchema = z.object({
 
   iso: IsoSchema,
 
+  cameraUsed: z.string().trim().min(1).max(120).optional(),
+
   notes: z.string().nullable().optional(),
 
   status: RollStatusEnum,

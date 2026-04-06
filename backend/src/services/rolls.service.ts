@@ -10,6 +10,7 @@ export async function createRoll(userId: string, data: any) {
     name: data.name,
     filmStock: data.filmStock,
     iso: data.iso,
+    cameraUsed: data.cameraUsed ?? "",
     notes: data.notes ?? "",
     status: data.status ?? "active", // change to in progress?
     rollType: data.rollType,

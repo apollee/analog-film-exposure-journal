@@ -21,7 +21,10 @@ export default function JournalRoll({ roll }: { roll: Roll }) {
         <div className="roll-card-top">
           <div>
             <h3 className="roll-title">{roll.name}</h3>
-            <p className="roll-sub">{filmStockLabel} • ISO {roll.iso}</p>
+            <p className="roll-sub">
+              {filmStockLabel} • ISO {roll.iso}
+              {roll.cameraUsed ? ` • ${roll.cameraUsed}` : ""}
+            </p>
             {roll.notes && <p className="roll-notes">{roll.notes}</p>}
           </div>
           <StatusPill status={roll.status} />

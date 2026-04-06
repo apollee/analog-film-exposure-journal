@@ -35,6 +35,7 @@ export const FrameCreateSchema = z.object({
   settings: z.object({
     aperture: ApertureSchema,
     shutterSpeed: ShutterSpeedSchema,
+    flashUsed: z.boolean().optional().default(false),
   }),
   note: z.string().optional().nullable(),
 });

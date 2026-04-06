@@ -31,7 +31,8 @@ export async function createFrame(userId: string, rollId: string, data: any) {
     frameNumber,
     settings: {
       aperture: data.settings.aperture,
-      shutterSpeed: data.settings.shutterSpeed
+      shutterSpeed: data.settings.shutterSpeed,
+      flashUsed: data.settings.flashUsed ?? false
     },
     note: data.note || "",
     review: null,

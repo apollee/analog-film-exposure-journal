@@ -11,6 +11,7 @@ interface FrameFormProps {
 export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormProps) {
   const [aperture, setAperture] = useState("");
   const [shutterSpeed, setShutterSpeed] = useState("");
+  const [flashUsed, setFlashUsed] = useState(false);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -29,7 +30,8 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
       body: JSON.stringify({
         settings: {
           aperture: Number(aperture),
-          shutterSpeed
+          shutterSpeed,
+          flashUsed
         },
         note
       })
@@ -37,6 +39,7 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
 
     setAperture("");
     setShutterSpeed("");
+    setFlashUsed(false);
     setNote("");
     setLoading(false);
     setOpen(false);
@@ -94,6 +97,15 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
                     </option>
                   ))}
                 </select>
+              </label>
+
+              <label className="checkbox-field">
+                <span>Flash Used</span>
+                <input
+                  type="checkbox"
+                  checked={flashUsed}
+                  onChange={(e) => setFlashUsed(e.target.checked)}
+                />
               </label>
 
               <label>
