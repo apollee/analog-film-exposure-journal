@@ -100,8 +100,11 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm);
+  width: 100%;
+  text-align: left;
 }
 
 .checkbox-field input[type="checkbox"] {
   width: auto;
+  margin-left: auto;
 }
