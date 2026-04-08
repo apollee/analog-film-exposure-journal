@@ -100,7 +100,7 @@ export default function FrameForm({ rollId, userId, onFrameCreated }: FrameFormP
               </label>
 
               <label className="checkbox-field">
-                <span>Flash Used</span>
+                <span>Flash</span>
                 <input
                   type="checkbox"
                   checked={flashUsed}
