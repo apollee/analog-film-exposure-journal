@@ -66,6 +66,9 @@
   padding: 8px 12px;
   border-radius: var(--radius-pill);
   font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .outline-btn {
@@ -236,4 +239,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+.icon-inline svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
