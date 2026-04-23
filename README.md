@@ -4,190 +4,264 @@
 
 ### Overview
 
-This project is a cloud-native web application designed to help photographers using manual analog film cameras record and later review the exposure settings used for each frame of a film roll.
+Analog Film Exposure Journal is a cloud-native web application designed to help photographers using manual analog film cameras record and later review the exposure settings used for each frame of a film roll.
 
-Because analog photography provides no immediate feedback, photographers often struggle to understand whether a photo was underexposed, overexposed, or correctly exposed until the film is developed. This application aims to close that feedback loop by allowing users to record their settings at the time of shooting and analyze results after development.
+Because analog photography provides no immediate feedback, photographers often struggle to understand whether a photo was underexposed, overexposed, or correctly exposed until the film is developed. This application closes that feedback loop by allowing users to record their settings while shooting and evaluate the results later.
 
-In addition to its functional goal, this project serves as a portfolio-grade Azure cloud solution, demonstrating best practices in cloud architecture, security, serverless computing, and observability.
+In addition to its functional purpose, the project is designed as an Azure architecture portfolio solution that demonstrates the use of managed cloud services for frontend hosting, authentication, serverless APIs, document storage, secret management, and observability.
 
 ### Problem Statement
 
-Analog film photographers manually control exposure parameters such as ISO (if pushing the film), aperture, and shutter speed, but receive delayed feedback once the film is developed. Without a systematic way to track these settings per frame, it is difficult to:
+Analog film photographers manually control exposure parameters such as ISO, aperture, and shutter speed, but receive delayed feedback once the film is developed. Without a structured way to record these settings per frame, it is difficult to:
 
 - Identify recurring exposure mistakes
-- Understand how different lighting conditions affect results
+- Understand how lighting conditions affect results
 - Improve technical photography skills over time
 
-The goal of this project is to provide a cloud-based journaling system that allows photographers to record exposure data per frame and review outcomes after development.
+The goal of the project is to provide a cloud-based journaling system that supports both capture-time note taking and post-development review.
 
 ### Core Features
 
-#### Authentication & User Management
+#### Authentication and User Access
 
-- User sign up and login
-- Secure authentication using Microsoft Entra External ID
+- User sign-up and sign-in
+- Secure access using Microsoft Entra External ID integrated with Azure Static Web Apps
+- Route protection for authenticated journal features
 
 #### Film Roll Management
 
 - Create and manage film rolls
-- Record film stock details and shooting metadata
+- Record film stock, ISO, camera, notes, and roll status
 
 #### Frame-Level Exposure Logging
 
 - Record exposure settings for each frame in a roll
-- Add contextual notes per frame
+- Store shutter speed, aperture, flash usage, and contextual notes
 
 #### Post-Development Review
 
-- Mark frames as:
-  - Underexposed
-  - Overexposed
-  - Correctly exposed
-- Attach or link scanned images of developed frames **which may be added in a future iteration.**
+- Review frames after development
+- Mark frames as underexposed, overexposed, or well exposed
+- Add review notes to support learning over time
 
 ### Core Domain Model
 
-The domain is intentionally modeled around real analog photography workflows.
+The domain is intentionally modeled around the real workflow of shooting and developing analog film.
 
-#### FilmRoll
+#### Film Roll
 
-Represents a physical roll of film.
+Represents a physical roll of film owned by a single user.
 
-**Attributes:**
+**Key attributes**
 
-- Film brand (e.g. Kodak, Ilford)
-- Film type (Color / Black & White)
-- ISO
 - Roll name
-- Identifier
-- Start date
-- End date
+- Film stock
+- ISO
+- Camera used
 - Notes
-- Optional image (used for frontend visualization)
+- Status
+- Roll type
 
-**Notes:**
+**Notes**
 
-- A film roll is owned by a single user
-- A roll contains multiple frames (typically 24 or 36)
+- A roll belongs to one user
+- A roll contains multiple frames, typically 24 or 36
+- A roll moves through a simple lifecycle from in progress to developed
 
 #### Frame
 
-Represents a single exposure on a film roll.
+Represents a single exposure within a roll.
 
-**Attributes:**
+**Key attributes**
 
 - Frame number
-- Aperture (f-stop)
+- Aperture
 - Shutter speed
-- Notes
+- Flash usage
+- Shooting note
 
-**Notes:**
+**Notes**
 
-- Frames are associated with exactly one film roll
+- Each frame belongs to exactly one roll
+- Frame data is stored separately from roll metadata to support scale and query efficiency
 
-#### FrameReview
+#### Frame Review
 
 Represents the post-development evaluation of a frame.
 
-**Attributes:**
+**Key attributes**
 
-- Exposure result (under / over / correct)
-- Optional scanned image or external link **which may be added in a future iteration.**
-- Review notes
+- Exposure outcome
+- Review note
 
-**Notes:**
+**Notes**
 
-- Review data is only added after film development
-- Separating this from the Frame object keeps shooting data and evaluation data conceptually distinct
+- Review data is only added after the roll is marked as developed
+- In implementation terms, review data is stored as part of the frame document
 
-### Architecture Overview
+### Architecture Summary
 
-The system is designed using a layered, cloud-native architecture on Microsoft Azure.
+The solution follows a layered cloud-native architecture on Microsoft Azure using managed platform services.
 
-#### Frontend (Presentation Layer)
+#### Presentation Layer
 
 - **Azure Static Web Apps**
-- **Framework:** React
-- **Authentication:** Integrated using Microsoft Entra External ID
+- **Frontend framework:** React
 
-#### Backend (API Layer)
+#### Identity Layer
 
-- **Azure Functions** (serverless)
+- **Microsoft Entra External ID**
+- Authentication is handled through Azure Static Web Apps built-in authentication integration
 
+#### Application Layer
+
+- **Azure Functions**
+- Hosts the backend HTTP API and business logic
 
 #### Data Layer
 
-The application uses **Azure Cosmos DB (Serverless)** with a multi-container design to support multi-user isolation, efficient queries, and scalable frame storage.
+- **Azure Cosmos DB Serverless**
+- Stores application data using separate containers for rolls and frames
 
-##### Containers
+#### Security Layer
 
-###### Rolls
+- **Azure Key Vault**
+- Stores sensitive configuration such as Cosmos DB connection details
+
+#### Observability Layer
+
+- **Application Insights**
+- Captures logs and telemetry for operational visibility
+
+### Architecture Overview
+
+The system is designed to keep responsibilities clearly separated across Azure-managed services:
+
+- The frontend is delivered through Azure Static Web Apps
+- User authentication is provided by Microsoft Entra External ID
+- Backend API operations are handled by Azure Functions
+- Application data is persisted in Azure Cosmos DB Serverless
+- Secrets are retrieved from Azure Key Vault
+- Telemetry is sent to Application Insights
+
+This architecture is intentionally optimized for a small-scale workload with low to moderate traffic. It favors low fixed cost, operational simplicity, and fast delivery over high-throughput optimization.
+
+### Data Model
+
+The application uses **Azure Cosmos DB Serverless** with a multi-container design to support user isolation and efficient access patterns.
+
+#### Containers
+
+##### Rolls
+
 Stores film roll metadata.
 
-**Partition Key:** `/userId`
+- **Partition key:** `/userId`
 
-This allows efficient retrieval of all rolls belonging to a specific user and provides natural tenant isolation.
+This supports efficient retrieval of all rolls belonging to a given user.
 
-###### Frames
-Stores individual frame data, including exposure settings and optional review results.
+##### Frames
 
-**Partition Key:** `/rollId`
+Stores individual frame data and optional review information.
 
-This enables efficient queries for retrieving all frames associated with a roll.
+- **Partition key:** `/rollId`
 
-##### Roll Document Structure
+This supports efficient retrieval of all frames belonging to a given roll.
 
-Each roll represents a physical film roll created by a user.
+#### Sample Roll Document
 
 ```json
 {
   "id": "roll-123",
   "userId": "user-456",
   "name": "Lisbon Street Trip",
-  "filmStock": "Kodak Portra 400",
+  "filmStock": "KODAK_PORTRA_400",
   "iso": 400,
-  "notes": "Sunny afternoon",
-  "status": "in_progress",
-  "rollColor": "color",
+  "cameraUsed": "Canon AE-1",
+  "notes": "Sunny afternoon walk",
+  "status": "IN_PROGRESS",
+  "rollType": "COLOR",
   "createdAt": "2026-02-18T18:00:00Z"
 }
 ```
 
-##### Frame Document Structure
-
-Each frame represents a single exposure within a roll. Frame reviews are embedded inside the frame document and are only added after the roll is completed.
+#### Sample Frame Document
 
 ```json
 {
   "id": "frame-001",
   "rollId": "roll-123",
+  "userId": "user-456",
   "frameNumber": 1,
-  "aperture": "f/2.8",
-  "shutterSpeed": "1/125",
-  "notes": "Shot indoors",
+  "settings": {
+    "aperture": 8,
+    "shutterSpeed": "1/125",
+    "flashUsed": false
+  },
+  "note": "Shot indoors near window light",
   "review": {
-    "status": "underexposed",
-    "notes": "Should have opened more the aperture",
-  }
+    "exposure": "underexposed",
+    "note": "Could have opened one stop more"
+  },
+  "createdAt": "2026-02-18T18:05:00Z"
 }
 ```
 
-###### Business Rule
+#### Business Rule
 
-Frame reviews can only be created when the roll status is set to completed. This rule is enforced at the API level.
+Frame reviews can only be added when the roll has been marked as developed. This rule is enforced in the application layer.
 
-## Authentication Flow
+### Authentication Flow
 
-This application uses **Microsoft Entra External ID** to authenticate users.
+This application uses **Microsoft Entra External ID** through **Azure Static Web Apps authentication**.
 
-1. A user accesses the frontend application hosted on Azure Static Web Apps.
-2. When authentication is required, the user is redirected to Microsoft Entra External ID.
-3. After a successful login or sign-up, an access token (JWT) is issued.
-4. The frontend stores the token and includes it in requests to protected API endpoints.
-5. Azure Functions validate the token and authorize access to user-specific resources.
+The flow is as follows:
 
-## Live Demo
+1. A user accesses the frontend hosted on Azure Static Web Apps.
+2. Protected journal routes require authentication.
+3. When authentication is required, Azure Static Web Apps redirects the user to Microsoft Entra External ID.
+4. After successful sign-in, Azure Static Web Apps provides authenticated user context to the application.
+5. The frontend uses that authenticated context when calling backend API endpoints.
+6. The backend uses the authenticated user identity provided by the platform to authorize access to user-specific resources.
 
-The frontend is deployed using **Azure Static Web Apps** with GitHub-based CI/CD. Every push to `main` triggers an automatic build and deployment.
+This approach avoids implementing a custom authentication system while still enforcing access control across protected application features.
 
-🔗 Live URL: https://www.analog-film-journal.com
+### Security and Observability
+
+The project includes several security and operational practices that support the overall architecture:
+
+- Sensitive database connection details are stored in Azure Key Vault
+- Secrets are retrieved by the backend and reused to avoid unnecessary repeated lookups
+- Journal routes are protected through Azure Static Web Apps authentication rules
+- Data is partitioned in Cosmos DB to align with user and roll access patterns
+- Application logs and telemetry are sent to Application Insights
+- Correlation identifiers are used in logging to support troubleshooting across requests
+
+### Deployment
+
+The solution is deployed as a set of managed Azure services:
+
+- The frontend is hosted on **Azure Static Web Apps**
+- The backend API is hosted on **Azure Functions**
+- Authentication is provided by **Microsoft Entra External ID**
+- Data is stored in **Azure Cosmos DB Serverless**
+- Secrets are managed in **Azure Key Vault**
+- Telemetry is captured in **Application Insights**
+
+The project uses a GitHub-based deployment model so that changes to the codebase can be built and deployed through Azure-integrated workflows.
+
+### Known Limitations and Future Improvements
+
+The current solution is intentionally lightweight and scoped to a modest usage profile. The following areas are either known limitations or natural future enhancements:
+
+- The architecture is designed for low to moderate traffic rather than large-scale sustained workloads
+- Scanned image attachment support is not yet implemented
+- Monitoring configuration can be further refined for production cost optimization
+- If usage were to grow significantly, database request efficiency would need to be reviewed more closely
+- Additional analytics and reporting features could improve the post-development learning experience
+
+### Live Demo
+
+The frontend is deployed using **Azure Static Web Apps** with GitHub-based CI/CD.
+
+Live URL: https://www.analog-film-journal.com
