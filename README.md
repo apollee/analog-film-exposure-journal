@@ -44,6 +44,34 @@ The goal of the project is to provide a cloud-based journaling system that suppo
 - Mark frames as underexposed, overexposed, or well exposed
 - Add review notes to support learning over time
 
+### Application Walkthrough
+
+The following screenshots highlight the main user journey through the application, from sign-in to post-development exposure review.
+
+#### Landing and Sign-In
+
+The landing page introduces the application and provides the entry point into the authenticated journal experience.
+
+![Landing Page](docs/screenshots/landing.png)
+
+#### Roll List
+
+The roll list acts as the main authenticated workspace, allowing users to browse and manage their film rolls.
+
+![Roll List](docs/screenshots/roll_list.png)
+
+#### Roll Details and Frame Logging
+
+The roll details view shows the selected roll together with its recorded frames, supporting the core exposure journaling workflow.
+
+![Roll Details and Frame Logging](docs/screenshots/frame_list.png)
+
+#### Review Mode
+
+Review mode allows users to evaluate developed frames and record whether each exposure was underexposed, overexposed, or well exposed.
+
+![Review Mode](docs/screenshots/review.png)
+
 ### Core Domain Model
 
 The domain is intentionally modeled around the real workflow of shooting and developing analog film.
@@ -139,6 +167,8 @@ The system is designed to keep responsibilities clearly separated across Azure-m
 - Telemetry is sent to Application Insights
 
 This architecture is intentionally optimized for a small-scale workload with low to moderate traffic. It favors low fixed cost, operational simplicity, and fast delivery over high-throughput optimization.
+
+![High-Level Solution Architecture](docs/Architecture_Diagram.png)
 
 ### Data Model
 
