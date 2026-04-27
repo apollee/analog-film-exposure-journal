@@ -105,32 +105,32 @@ The solution follows a layered cloud-native architecture on Microsoft Azure usin
 
 #### Presentation Layer
 
-- **Azure Static Web Apps**
-- **Frontend framework:** React
+- Azure Static Web Apps
+- Frontend framework: React
 
 #### Identity Layer
 
-- **Microsoft Entra External ID**
+- Microsoft Entra External ID
 - Authentication is handled through Azure Static Web Apps built-in authentication integration
 
 #### Application Layer
 
-- **Azure Functions**
+- Azure Functions
 - Hosts the backend HTTP API and business logic
 
 #### Data Layer
 
-- **Azure Cosmos DB Serverless**
+- Azure Cosmos DB Serverless
 - Stores application data using separate containers for rolls and frames
 
 #### Security Layer
 
-- **Azure Key Vault**
+- Azure Key Vault
 - Stores sensitive configuration such as Cosmos DB connection details
 
 #### Observability Layer
 
-- **Application Insights**
+- Application Insights
 - Captures logs and telemetry for operational visibility
 
 ### Architecture Overview
